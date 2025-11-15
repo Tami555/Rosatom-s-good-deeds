@@ -1,0 +1,611 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Список НКО - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .nko-list-container {
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .page-header {
+        text-align: center;
+        padding-top: 3rem;
+    }
+
+    .page-title {
+        color: var(--text-color);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .filters-section {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+    }
+
+    .filters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-label {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-select, .filter-input {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+    }
+
+    .filter-select:focus, .filter-input:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .search-box {
+        position: relative;
+    }
+
+    .search-input {
+        padding-left: 3rem;
+        width: 100%;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--dark-gray);
+    }
+
+    .filter-btn {
+        background: var(--primary-blue);
+        color: var(--white);
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .filter-btn:hover {
+        background: var(--primary-dark-blue);
+        transform: translateY(-2px);
+    }
+
+    .results-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+        border-bottom: 2px solid var(--primary-light-blue);
+    }
+
+    .results-count {
+        font-size: 1.1rem;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .results-count .highlight {
+        color: var(--primary-blue);
+        font-weight: 700;
+    }
+
+    .sort-options {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .sort-label {
+        color: var(--dark-gray);
+        font-weight: 500;
+    }
+
+    .nko-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .nko-card {
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        overflow: hidden;
+        border: 2px solid transparent;
+    }
+
+    .nko-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 102, 204, 0.15);
+        border-color: var(--primary-blue);
+    }
+
+    .nko-card-header {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .nko-card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+
+    .nko-card:hover .nko-card-image {
+        transform: scale(1.05);
+    }
+
+    .nko-card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+        padding: 1rem;
+        color: var(--white);
+    }
+
+    .nko-card-city {
+        background: var(--primary-blue);
+        color: var(--white);
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    .nko-card-body {
+        padding: 1.5rem;
+    }
+
+    .nko-card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+    }
+
+    .nko-card-description {
+        color: var(--dark-gray);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .nko-card-category {
+        display: inline-block;
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .nko-card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--medium-gray);
+    }
+
+    .nko-card-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nko-card-link:hover {
+        color: var(--primary-dark-blue);
+        transform: translateX(5px);
+    }
+
+    .nko-social-links {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .social-link {
+        color: var(--dark-gray);
+        text-decoration: none;
+        transition: var(--transition);
+        font-size: 1.1rem;
+    }
+
+    .social-link:hover {
+        color: var(--primary-blue);
+        transform: translateY(-2px);
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+    }
+
+    .no-results-icon {
+        font-size: 4rem;
+        color: var(--medium-gray);
+        margin-bottom: 1.5rem;
+    }
+
+    .no-results h3 {
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+
+    .no-results p {
+        color: var(--dark-gray);
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 3rem 0;
+    }
+
+    .page-link {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        transition: var(--transition);
+        min-width: 45px;
+        text-align: center;
+    }
+
+    .page-link:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+    }
+
+    .page-link.active {
+        background: var(--primary-blue);
+        color: var(--white);
+        border-color: var(--primary-blue);
+    }
+
+    .page-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .page-link.disabled:hover {
+        border-color: var(--medium-gray);
+        color: var(--text-color);
+    }
+
+    .current-page-info {
+        text-align: center;
+        color: var(--dark-gray);
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .nko-list-container {
+            padding: 0 1rem;
+        }
+        
+        .filters-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .nko-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .results-info {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="nko-list-container">
+    <!-- Заголовок страницы -->
+    <div class="page-header">
+        <h1 class="page-title">Некоммерческие организации</h1>
+        <p class="page-subtitle">
+            Найдите организации, которые делают ваш город лучше. 
+            Присоединяйтесь к их инициативам или станьте волонтёром.
+        </p>
+    </div>
+
+    <!-- Фильтры и поиск -->
+    <div class="filters-section">
+        <form method="get" id="filtersForm">
+            <div class="filters-grid">
+                <!-- Поиск -->
+                <div class="filter-group">
+                    <label class="filter-label">Поиск по названию или описанию</label>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" 
+                               name="search" 
+                               value="{{ search_query }}"
+                               class="filter-input search-input" 
+                               placeholder="Введите название или описание...">
+                    </div>
+                </div>
+
+                <!-- Город -->
+                <div class="filter-group">
+                    <label class="filter-label">Город</label>
+                    <select name="city" class="filter-select" onchange="this.form.submit()">
+                        <option value="">Все города</option>
+                        {% for city in cities %}
+                            <option value="{{ city.id }}" 
+                                    {% if selected_city and selected_city.id == city.id %}selected{% endif %}>
+                                {{ city.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Категория -->
+                <div class="filter-group">
+                    <label class="filter-label">Категория</label>
+                    <select name="category" class="filter-select" onchange="this.form.submit()">
+                        <option value="">Все категории</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" 
+                                    {% if selected_category and selected_category.id == category.id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Сортировка -->
+                <div class="filter-group">
+                    <label class="filter-label">Сортировка</label>
+                    <select name="sort" class="filter-select" onchange="this.form.submit()">
+                        <option value="name" {% if sort_by == 'name' %}selected{% endif %}>По названию</option>
+                        <option value="city" {% if sort_by == 'city' %}selected{% endif %}>По городу</option>
+                    </select>
+                </div>
+
+                <!-- Кнопка сброса -->
+                <div class="filter-group">
+                    <a href="{% url 'nko:nko_list' %}" class="filter-btn" style="text-decoration: none; text-align: center;">
+                        <i class="fas fa-redo"></i> Сбросить
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Информация о результатах -->
+    <div class="results-info">
+        <div class="results-count">
+            Найдено: <span class="highlight">{{ total_count }}</span> организаций
+            {% if selected_city %}
+                в городе <span class="highlight">{{ selected_city.name }}</span>
+            {% endif %}
+            {% if selected_category %}
+                в категории <span class="highlight">{{ selected_category.name }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Сетка карточек НКО -->
+    {% if nkos.object_list %}
+        <div class="nko-grid">
+            {% for nko in nkos %}
+                <div class="nko-card">
+                    <div class="nko-card-header">
+                        {% if nko.logo %}
+                            <img src="{{ nko.logo.url }}" alt="{{ nko.name }}" class="nko-card-image">
+                        {% else %}
+                            <div style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%); 
+                                      height: 100%; 
+                                      display: flex; 
+                                      align-items: center; 
+                                      justify-content: center;">
+                                <i class="fas fa-building" style="font-size: 3rem; color: white;"></i>
+                            </div>
+                        {% endif %}
+                        <div class="nko-card-overlay">
+                            <span class="nko-card-city">{{ nko.city.name }}</span>
+                            <h3 class="nko-card-title">{{ nko.name }}</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="nko-card-body">
+                        <span class="nko-card-category">{{ nko.category.name }}</span>
+                        <p class="nko-card-description">{{ nko.short_description }}</p>
+                        
+                        <div class="nko-card-actions">
+                            <a href="{% url 'nko:nko_detail' nko.pk %}" class="nko-card-link">
+                                Подробнее <i class="fas fa-arrow-right"></i>
+                            </a>
+                            
+                            <div class="nko-social-links">
+                                {% if nko.website %}
+                                    <a href="{{ nko.website }}" target="_blank" class="social-link" title="Веб-сайт">
+                                        <i class="fas fa-globe"></i>
+                                    </a>
+                                {% endif %}
+                                {% if nko.vk_link %}
+                                    <a href="{{ nko.vk_link }}" target="_blank" class="social-link" title="ВКонтакте">
+                                        <i class="fab fa-vk"></i>
+                                    </a>
+                                {% endif %}
+                                {% if nko.telegram_link %}
+                                    <a href="{{ nko.telegram_link }}" target="_blank" class="social-link" title="Telegram">
+                                        <i class="fab fa-telegram"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        {% if nkos.has_other_pages %}
+            <div class="pagination-container">
+                <div class="current-page-info">
+                    Страница {{ nkos.number }} из {{ nkos.paginator.num_pages }}
+                </div>
+                
+                <div class="pagination">
+                    {% if nkos.has_previous %}
+                        <a href="?page=1{% if selected_city %}&city={{ selected_city.id }}{% endif %}{% if selected_category %}&category={{ selected_category.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" 
+                           class="page-link" title="Первая страница">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                        <a href="?page={{ nkos.previous_page_number }}{% if selected_city %}&city={{ selected_city.id }}{% endif %}{% if selected_category %}&category={{ selected_category.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" 
+                           class="page-link" title="Предыдущая страница">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link disabled"><i class="fas fa-angle-double-left"></i></span>
+                        <span class="page-link disabled"><i class="fas fa-angle-left"></i></span>
+                    {% endif %}
+
+                    {% for num in nkos.paginator.page_range %}
+                        {% if nkos.number == num %}
+                            <span class="page-link active">{{ num }}</span>
+                        {% elif num > nkos.number|add:'-3' and num < nkos.number|add:'3' %}
+                            <a href="?page={{ num }}{% if selected_city %}&city={{ selected_city.id }}{% endif %}{% if selected_category %}&category={{ selected_category.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" 
+                               class="page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if nkos.has_next %}
+                        <a href="?page={{ nkos.next_page_number }}{% if selected_city %}&city={{ selected_city.id }}{% endif %}{% if selected_category %}&category={{ selected_category.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" 
+                           class="page-link" title="Следующая страница">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                        <a href="?page={{ nkos.paginator.num_pages }}{% if selected_city %}&city={{ selected_city.id }}{% endif %}{% if selected_category %}&category={{ selected_category.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" 
+                           class="page-link" title="Последняя страница">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link disabled"><i class="fas fa-angle-right"></i></span>
+                        <span class="page-link disabled"><i class="fas fa-angle-double-right"></i></span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <!-- Сообщение, если НКО не найдены -->
+        <div class="no-results">
+            <div class="no-results-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>Организации не найдены</h3>
+            <p>
+                {% if selected_city %}
+                    В городе "{{ selected_city.name }}" пока нет зарегистрированных организаций.
+                {% else %}
+                    По вашему запросу ничего не найдено. Попробуйте изменить параметры поиска.
+                {% endif %}
+            </p>
+            <a href="{% url 'nko:nko_list' %}" class="filter-btn" style="text-decoration: none;">
+                <i class="fas fa-redo"></i> Показать все организации
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Автоматическая отправка формы при изменении фильтров
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterSelects = document.querySelectorAll('select[name="city"], select[name="category"], select[name="sort"]');
+        
+        filterSelects.forEach(select => {
+            select.addEventListener('change', function() {
+                // Сохраняем выбранный город в сессию
+                if (this.name === 'city' && this.value) {
+                    // Здесь можно добавить AJAX запрос для сохранения в сессии
+                    console.log('Выбран город:', this.value);
+                }
+                
+                this.form.submit();
+            });
+        });
+
+        // Анимация карточек при загрузке
+        const cards = document.querySelectorAll('.nko-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animation = 'slideUp 0.5s ease forwards';
+        });
+    });
+</script>
+{% endblock %}

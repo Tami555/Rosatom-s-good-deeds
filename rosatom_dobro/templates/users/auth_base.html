@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        min-height: calc(100vh - 140px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--primary-light-blue) 0%, var(--white) 100%);
+    }
+
+    .auth-card {
+        background: var(--white);
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 102, 204, 0.1);
+        width: 100%;
+        max-width: 500px;
+        animation: slideUp 0.5s ease;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .auth-icon {
+        font-size: 3rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .auth-title {
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .auth-subtitle {
+        color: var(--dark-gray);
+        opacity: 0.7;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .form-input, .form-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+    }
+
+    .form-input:focus, .form-select:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .form-input::placeholder {
+        color: #a0a0a0;
+    }
+
+    .error-list {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .error-list li {
+        margin-bottom: 0.25rem;
+    }
+
+    .auth-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary-blue);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        margin-bottom: 1.5rem;
+    }
+
+    .auth-btn:hover {
+        background: var(--primary-dark-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
+    }
+
+    .auth-links {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--medium-gray);
+    }
+
+    .auth-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        margin: 0 0.5rem;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .auth-link:hover {
+        color: var(--primary-dark-blue);
+        text-decoration: underline;
+    }
+
+    .user-type-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .badge-volunteer {
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+    }
+
+    .badge-nko {
+        background: #e8f5e8;
+        color: #27ae60;
+    }
+
+    @media (max-width: 768px) {
+        .auth-card {
+            padding: 2rem;
+            margin: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        {% block auth_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Добрые дела Росатома{% endblock %}</title>
+
+    <!-- Подключаем CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Навигационная шапка -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Логотип -->
+            <div class="nav-logo">
+                <a href="{% url 'main:home' %}">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Добрые дела Росатома</span>
+                </a>
+            </div>
+
+            <!-- Основное меню -->
+            <div class="nav-menu">
+                <a href="{% url 'main:home' %}" class="nav-link">Главная</a>
+                <a href="{% url 'nko:nko_list' %}" class="nav-link">Список НКО</a>
+                <a href="{% url 'knowledge_base:knowledge_list' %}" class="nav-link">База знаний</a>
+                <a href="{% url 'events:event_list' %}" class="nav-link">Календарь событий</a>
+                <a href="{% url 'news:news_list' %}" class="nav-link">Новости</a>
+            </div>
+
+            <!-- Правая часть навигации -->
+            <div class="nav-right">
+                <!-- Выбор города -->
+<!--                <div class="city-selector">-->
+<!--                    <select id="citySelect" class="city-dropdown">-->
+<!--                        <option value="">Все города</option>-->
+<!--                        {% for city in cities %}-->
+<!--                            <option value="{{ city.id }}" {% if selected_city == city.id %}selected{% endif %}>-->
+<!--                                {{ city.name }}-->
+<!--                            </option>-->
+<!--                        {% endfor %}-->
+<!--                    </select>-->
+<!--                </div>-->
+
+                <!-- Кнопки авторизации -->
+                <div class="auth-buttons">
+                    {% if user.is_authenticated %}
+                        <div class="user-menu">
+                            <span class="user-greeting">Привет, {{ user.username }}</span>
+                            <div class="dropdown">
+                                <a href="{% url 'users:profile' %}" class="nav-link">Личный кабинет</a>
+                                <a href="{% url 'users:logout' %}" class="nav-link">Выйти</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'users:volunteer_login' %}" class="login-btn">Войти</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Добрые дела Росатома</h3>
+                <p>Единый портал для волонтёров и НКО в городах присутствия Росатома</p>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <p>Email: info@rosatom-dobro.ru</p>
+                <p>Телефон: +7 (XXX) XXX-XX-XX</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Добрые дела Росатома. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ news.title }} - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .news-detail-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        transition: var(--transition);
+    }
+
+    .back-link:hover {
+        color: var(--primary-dark-blue);
+        transform: translateX(-5px);
+    }
+
+    .news-hero {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+        color: var(--white);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .news-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("{% static 'images/pattern.svg' %}") repeat;
+        opacity: 0.1;
+    }
+
+    .news-hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .news-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .news-meta {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+
+    .news-cities {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .city-tag {
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--white);
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .news-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .news-main {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+    }
+
+    .news-image {
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+    }
+
+    .news-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .news-image-placeholder {
+        width: 100%;
+        height: 300px;
+        background: linear-gradient(135deg, var(--primary-light-blue) 0%, var(--white) 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-blue);
+        font-size: 3rem;
+    }
+
+    .news-text {
+        line-height: 1.7;
+        color: var(--text-color);
+        font-size: 1.1rem;
+    }
+
+    .news-text p {
+        margin-bottom: 1.5rem;
+    }
+
+    .news-text h2, .news-text h3 {
+        color: var(--text-color);
+        margin: 2rem 0 1rem 0;
+        font-weight: 600;
+    }
+
+    .news-text ul, .news-text ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    .news-text li {
+        margin-bottom: 0.5rem;
+    }
+
+    .news-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .sidebar-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+    }
+
+    .sidebar-title {
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-light-blue);
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--medium-gray);
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+
+    .info-content {
+        flex: 1;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 0.25rem;
+    }
+
+    .info-value {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+
+    .similar-news {
+        margin-top: 3rem;
+    }
+
+    .similar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .similar-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .similar-card:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    .similar-card-title {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        line-height: 1.3;
+    }
+
+    .similar-card-date {
+        color: var(--primary-blue);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .similar-card-preview {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .similar-card-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .similar-card-link:hover {
+        color: var(--primary-dark-blue);
+    }
+
+    .social-share {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--medium-gray);
+    }
+
+    .share-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        transition: var(--transition);
+        font-size: 0.9rem;
+    }
+
+    .share-btn:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 968px) {
+        .news-content {
+            grid-template-columns: 1fr;
+        }
+
+        .news-hero-content {
+            text-align: left;
+        }
+
+        .news-meta {
+            justify-content: flex-start;
+        }
+
+        .news-cities {
+            justify-content: flex-start;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .news-detail-container {
+            padding: 0 1rem;
+        }
+
+        .news-title {
+            font-size: 2rem;
+        }
+
+        .news-hero {
+            padding: 2rem 1rem;
+        }
+
+        .news-main {
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .social-share {
+            flex-direction: column;
+        }
+
+        .share-btn {
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="news-detail-container">
+    <!-- Кнопка назад -->
+    <a href="{% url 'news:news_list' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Назад к списку новостей
+    </a>
+
+    <!-- Герой-секция новости -->
+    <div class="news-hero">
+        <div class="news-hero-content">
+            <h1 class="news-title">{{ news.title }}</h1>
+
+            <div class="news-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>{{ news.created_at|date:"d E Y" }}</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>{{ news.created_at|date:"H:i" }}</span>
+                </div>
+            </div>
+
+            {% if news.cities.all %}
+            <div class="news-cities">
+                {% for city in news.cities.all %}
+                    <span class="city-tag">{{ city.name }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="news-content">
+        <!-- Левая колонка -->
+        <div class="news-main">
+            <!-- Изображение новости -->
+            {% if news.image %}
+            <div class="news-image">
+                <img src="{{ news.image.url }}" alt="{{ news.title }}">
+            </div>
+            {% else %}
+            <div class="news-image-placeholder">
+                <i class="fas fa-newspaper"></i>
+            </div>
+            {% endif %}
+
+            <!-- Текст новости -->
+            <div class="news-text">
+                {{ news.content|linebreaks }}
+            </div>
+
+            <!-- Кнопки поделиться -->
+            <div class="social-share">
+                <span style="font-weight: 500; color: var(--text-color);">Поделиться:</span>
+                <a href="https://vk.com/share.php?url={{ request.build_absolute_uri }}"
+                   target="_blank" class="share-btn">
+                    <i class="fab fa-vk"></i> ВКонтакте
+                </a>
+                <a href="https://t.me/share/url?url={{ request.build_absolute_uri }}&text={{ news.title }}"
+                   target="_blank" class="share-btn">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+            </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="news-sidebar">
+            <!-- Информация о новости -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">Информация</h3>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Дата публикации</div>
+                        <div class="info-value">{{ news.created_at|date:"d E Y, H:i" }}</div>
+                    </div>
+                </div>
+                {% if news.cities.all %}
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Города</div>
+                        <div class="info-value">
+                            {% for city in news.cities.all %}
+                                {{ city.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Быстрые ссылки -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">Быстрые ссылки</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <a href="{% url 'nko:nko_list' %}" class="news-link" style="font-size: 0.9rem;">
+                        <i class="fas fa-building"></i> Список НКО
+                    </a>
+                    <a href="{% url 'events:event_list' %}" class="news-link" style="font-size: 0.9rem;">
+                        <i class="fas fa-calendar-alt"></i> Календарь событий
+                    </a>
+                     <a href="{% url 'events:event_list' %}" class="news-link" style="font-size: 0.9rem;">
+                        <i class="fas fa-calendar-alt"></i> База Знаний
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

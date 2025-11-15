@@ -1,0 +1,900 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}База знаний - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .knowledge-container {
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-top: 3rem;
+    }
+
+    .page-title {
+        color: var(--text-color);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .filters-section {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+    }
+
+    .filters-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr auto;
+        gap: 1.5rem;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-label {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-select, .filter-input {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+    }
+
+    .filter-select:focus, .filter-input:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .search-box {
+        position: relative;
+    }
+
+    .search-input {
+        padding-left: 3rem;
+        width: 100%;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--dark-gray);
+    }
+
+    .filter-btn {
+        background: var(--primary-blue);
+        color: var(--white);
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+        background: var(--primary-dark-blue);
+        transform: translateY(-2px);
+    }
+
+    .hashtags-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--medium-gray);
+    }
+
+    .hashtags-title {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+
+    .hashtags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .hashtag {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .hashtag:hover {
+        background: var(--primary-blue);
+        color: var(--white);
+        transform: translateY(-2px);
+    }
+
+    .hashtag.active {
+        background: var(--primary-blue);
+        color: var(--white);
+        border-color: var(--primary-blue);
+    }
+
+    .results-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+        border-bottom: 2px solid var(--primary-light-blue);
+    }
+
+    .results-count {
+        font-size: 1.1rem;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .results-count .highlight {
+        color: var(--primary-blue);
+        font-weight: 700;
+    }
+
+    .knowledge-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .knowledge-card {
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        border: 2px solid transparent;
+        overflow: hidden;
+    }
+
+    .knowledge-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 102, 204, 0.15);
+        border-color: var(--primary-blue);
+    }
+
+    .knowledge-video {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background: #000;
+        border-radius: 15px 15px 0 0;
+        overflow: hidden;
+    }
+
+    .video-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .video-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .video-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .video-placeholder p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .knowledge-content {
+        padding: 1.5rem;
+    }
+
+    .knowledge-header {
+        margin-bottom: 1rem;
+    }
+
+    .knowledge-course {
+        font-size: 0.9rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .knowledge-topic {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .knowledge-speaker {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .knowledge-speaker i {
+        color: var(--primary-blue);
+    }
+
+    .knowledge-hashtags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .knowledge-hashtag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .knowledge-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--medium-gray);
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+
+    .knowledge-date {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .knowledge-date i {
+        color: var(--primary-blue);
+    }
+
+    .video-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+        position: relative;
+        margin: 2% auto;
+        padding: 20px;
+        width: 90%;
+        max-width: 800px;
+        border-radius: 15px;
+        background: var(--white);
+    }
+
+    .close-modal {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        color: var(--text-color);
+        font-size: 2rem;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+        background: var(--white);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+    }
+
+    .close-modal:hover {
+        background: var(--primary-blue);
+        color: var(--white);
+        transform: rotate(90deg);
+    }
+
+    .modal-video-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        margin-top: 2rem;
+    }
+
+    .modal-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 10px;
+    }
+
+    .modal-info {
+        padding: 1.5rem 0 0;
+    }
+
+    .modal-course {
+        font-size: 1rem;
+        color: var(--primary-blue);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-topic {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-speaker {
+        color: var(--dark-gray);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        grid-column: 1 / -1;
+    }
+
+    .no-results-icon {
+        font-size: 4rem;
+        color: var(--medium-gray);
+        margin-bottom: 1.5rem;
+    }
+
+    .no-results h3 {
+        color: var(--text-color);
+        margin-bottom: 1rem;
+    }
+
+    .no-results p {
+        color: var(--dark-gray);
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 3rem 0;
+    }
+
+    .page-link {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        transition: var(--transition);
+        min-width: 45px;
+        text-align: center;
+    }
+
+    .page-link:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+    }
+
+    .page-link.active {
+        background: var(--primary-blue);
+        color: var(--white);
+        border-color: var(--primary-blue);
+    }
+
+    .page-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .page-link.disabled:hover {
+        border-color: var(--medium-gray);
+        color: var(--text-color);
+    }
+
+    .current-page-info {
+        text-align: center;
+        color: var(--dark-gray);
+        margin-bottom: 1rem;
+    }
+    .video-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+    border-radius: 15px;
+    color: var(--white);
+    text-align: center;
+    min-height: 300px;
+}
+
+.play-button-container {
+    margin-bottom: 2rem;
+}
+
+.play-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: var(--white);
+    color: var(--primary-blue);
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    color: var(--primary-dark-blue);
+}
+
+.play-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.video-preview-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.video-preview-text p {
+    opacity: 0.9;
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.modal-video-container {
+    margin-top: 0;
+}
+
+    @media (max-width: 968px) {
+        .filters-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .knowledge-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-content {
+            width: 95%;
+            margin: 5% auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .knowledge-container {
+            padding: 0 1rem;
+        }
+
+        .results-info {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .knowledge-video {
+            height: 200px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="knowledge-container">
+    <!-- Заголовок страницы -->
+    <div class="page-header">
+        <h1 class="page-title">База знаний</h1>
+        <p class="page-subtitle">
+            Обучающие материалы, видеоуроки и полезные ресурсы
+            для волонтёров и представителей НКО
+        </p>
+    </div>
+
+    <!-- Фильтры и поиск -->
+    <div class="filters-section">
+        <form method="get" id="filtersForm">
+            <div class="filters-grid">
+                <!-- Поиск -->
+                <div class="filter-group">
+                    <label class="filter-label">Поиск по базе знаний</label>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text"
+                               name="search"
+                               value="{{ search_query }}"
+                               class="filter-input search-input"
+                               placeholder="Введите курс, тему или спикера...">
+                    </div>
+                </div>
+
+                <!-- Хэштег -->
+                <div class="filter-group">
+                    <label class="filter-label">Фильтр по хэштегам</label>
+                    <select name="hashtag" class="filter-select" onchange="this.form.submit()">
+                        <option value="">Все хэштеги</option>
+                        {% for hashtag in all_hashtags %}
+                            <option value="{{ hashtag.id }}"
+                                    {% if selected_hashtag and selected_hashtag.id == hashtag.id %}selected{% endif %}>
+                                #{{ hashtag.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Кнопка сброса -->
+                <div class="filter-group">
+                    <a href="{% url 'knowledge_base:knowledge_list' %}" class="filter-btn" style="text-decoration: none; text-align: center;">
+                        <i class="fas fa-redo"></i> Сбросить
+                    </a>
+                </div>
+            </div>
+
+            <!-- Популярные хэштеги -->
+            <div class="hashtags-section">
+                <div class="hashtags-title">Популярные хэштеги:</div>
+                <div class="hashtags-container">
+                    <a href="{% url 'knowledge_base:knowledge_list' %}"
+                       class="hashtag {% if not selected_hashtag %}active{% endif %}">
+                        Все
+                    </a>
+                    {% for hashtag in popular_hashtags %}
+                        <a href="?hashtag={{ hashtag.id }}{% if search_query %}&search={{ search_query }}{% endif %}"
+                           class="hashtag {% if selected_hashtag and selected_hashtag.id == hashtag.id %}active{% endif %}">
+                            #{{ hashtag.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Информация о результатах -->
+    <div class="results-info">
+        <div class="results-count">
+            Найдено: <span class="highlight">{{ total_count }}</span> материалов
+            {% if selected_hashtag %}
+                с хэштегом <span class="highlight">#{{ selected_hashtag.title }}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Сетка материалов -->
+    {% if knowledge_items.object_list %}
+        <div class="knowledge-grid">
+            {% for item in knowledge_items %}
+                <div class="knowledge-card">
+                    <!-- Видео или плейсхолдер -->
+                    <div class="knowledge-video">
+                        {% if item.video_url %}
+                            <!-- Превью видео с кнопкой воспроизведения -->
+                            <div style="width: 100%; height: 100%; background: #000; cursor: pointer; position: relative;"
+                                 onclick="openVideoModal('{{ item.video_url }}', '{{ item.course_title }}', '{{ item.topic }}', '{{ item.speaker }}')">
+                                <!-- Здесь можно было бы добавить превью изображение, но пока используем плейсхолдер -->
+                                <div class="video-placeholder">
+                                    <i class="fas fa-play-circle"></i>
+                                    <p>Нажмите для просмотра видео</p>
+                                </div>
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                                          background: rgba(255, 255, 255, 0.9); color: #000; padding: 1rem 2rem;
+                                          border-radius: 25px; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">
+                                    <i class="fas fa-play"></i> Смотреть видео
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="video-placeholder">
+                                <i class="fas fa-graduation-cap"></i>
+                                <p>Обучающий материал</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Контент материала -->
+                    <div class="knowledge-content">
+                        <div class="knowledge-header">
+                            <div class="knowledge-course">{{ item.course_title }}</div>
+                            <h3 class="knowledge-topic">{{ item.topic }}</h3>
+                            <div class="knowledge-speaker">
+                                <i class="fas fa-user-tie"></i>
+                                Спикер: {{ item.speaker }}
+                            </div>
+                        </div>
+
+                        <!-- Хэштеги -->
+                        {% if item.hashtags.all %}
+                        <div class="knowledge-hashtags">
+                            {% for hashtag in item.hashtags.all %}
+                                <span class="knowledge-hashtag">#{{ hashtag.title }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Мета-информация -->
+                        <div class="knowledge-meta">
+                            <div class="knowledge-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                {{ item.created_at|date:"d E Y" }}
+                            </div>
+                            {% if item.video_url %}
+                            <div style="color: var(--primary-blue); font-weight: 500;">
+                                <i class="fas fa-video"></i> Видео доступно
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        {% if knowledge_items.has_other_pages %}
+            <div class="pagination-container">
+                <div class="current-page-info">
+                    Страница {{ knowledge_items.number }} из {{ knowledge_items.paginator.num_pages }}
+                </div>
+
+                <div class="pagination">
+                    {% if knowledge_items.has_previous %}
+                        <a href="?page=1{% if selected_hashtag %}&hashtag={{ selected_hashtag.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}"
+                           class="page-link" title="Первая страница">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                        <a href="?page={{ knowledge_items.previous_page_number }}{% if selected_hashtag %}&hashtag={{ selected_hashtag.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}"
+                           class="page-link" title="Предыдущая страница">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link disabled"><i class="fas fa-angle-double-left"></i></span>
+                        <span class="page-link disabled"><i class="fas fa-angle-left"></i></span>
+                    {% endif %}
+
+                    {% for num in knowledge_items.paginator.page_range %}
+                        {% if knowledge_items.number == num %}
+                            <span class="page-link active">{{ num }}</span>
+                        {% elif num > knowledge_items.number|add:'-3' and num < knowledge_items.number|add:'3' %}
+                            <a href="?page={{ num }}{% if selected_hashtag %}&hashtag={{ selected_hashtag.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}"
+                               class="page-link">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if knowledge_items.has_next %}
+                        <a href="?page={{ knowledge_items.next_page_number }}{% if selected_hashtag %}&hashtag={{ selected_hashtag.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}"
+                           class="page-link" title="Следующая страница">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                        <a href="?page={{ knowledge_items.paginator.num_pages }}{% if selected_hashtag %}&hashtag={{ selected_hashtag.id }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}"
+                           class="page-link" title="Последняя страница">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    {% else %}
+                        <span class="page-link disabled"><i class="fas fa-angle-right"></i></span>
+                        <span class="page-link disabled"><i class="fas fa-angle-double-right"></i></span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+    {% else %}
+        <!-- Сообщение, если материалы не найдены -->
+        <div class="no-results">
+            <div class="no-results-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <h3>Материалы не найдены</h3>
+            <p>
+                {% if selected_hashtag %}
+                    С хэштегом "#{{ selected_hashtag.title }}" материалов пока нет.
+                {% else %}
+                    По вашему запросу материалы не найдены. Попробуйте изменить параметры поиска.
+                {% endif %}
+            </p>
+            <a href="{% url 'knowledge_base:knowledge_list' %}" class="filter-btn" style="text-decoration: none;">
+                <i class="fas fa-redo"></i> Показать все материалы
+            </a>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Модальное окно для видео -->
+<div id="videoModal" class="video-modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeVideoModal()">&times;</span>
+
+        <!-- Контент модального окна -->
+        <div class="modal-video-container">
+            <div class="video-preview">
+                <div class="play-button-container">
+                    <a id="watchButton" class="play-button" target="_blank">
+                        <i class="fas fa-play"></i>
+                    </a>
+                </div>
+                <div class="video-preview-text">
+                    <h3>Видео готово к просмотру</h3>
+                    <p>Нажмите на кнопку воспроизведения, чтобы посмотреть видео на оригинальной платформе</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-info">
+            <div class="modal-course" id="modalCourse"></div>
+            <h2 class="modal-topic" id="modalTopic"></h2>
+            <div class="modal-speaker" id="modalSpeaker"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Функции для работы с модальным окном видео
+    function openVideoModal(videoUrl, courseTitle, topic, speaker) {
+        const modal = document.getElementById('videoModal');
+        const modalCourse = document.getElementById('modalCourse');
+        const modalTopic = document.getElementById('modalTopic');
+        const modalSpeaker = document.getElementById('modalSpeaker');
+        const watchButton = document.getElementById('watchButton');
+
+        // Устанавливаем информацию о видео
+        modalCourse.textContent = courseTitle;
+        modalTopic.textContent = topic;
+        modalSpeaker.textContent = 'Спикер: ' + speaker;
+
+        // Устанавливаем ссылку на кнопку
+        watchButton.href = videoUrl;
+        watchButton.target = '_blank';
+
+        // Показываем модальное окно
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.onclick = function(event) {
+        const modal = document.getElementById('videoModal');
+        if (event.target === modal) {
+            closeVideoModal();
+        }
+    }
+
+    // Закрытие модального окна при нажатии Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeVideoModal();
+        }
+    });
+
+    // Анимация карточек при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.knowledge-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animation = 'slideUp 0.5s ease forwards';
+        });
+
+        // Автоматическая отправка формы при изменении фильтров
+        const filterSelects = document.querySelectorAll('select[name="hashtag"]');
+
+        filterSelects.forEach(select => {
+            select.addEventListener('change', function() {
+                this.form.submit();
+            });
+        });
+    });
+</script>
+{% endblock %}

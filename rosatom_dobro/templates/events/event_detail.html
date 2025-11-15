@@ -1,0 +1,531 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ event.title }} - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .event-detail-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        transition: var(--transition);
+    }
+
+    .back-link:hover {
+        color: var(--primary-dark-blue);
+        transform: translateX(-5px);
+    }
+
+    .event-hero {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+        color: var(--white);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .event-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("{% static 'images/pattern.svg' %}") repeat;
+        opacity: 0.1;
+    }
+
+    .event-hero-content {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .event-main-info {
+        flex: 1;
+    }
+
+    .event-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .event-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+    }
+
+    .event-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .meta-card {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 1rem;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+    }
+
+    .meta-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 0.5rem;
+    }
+
+    .meta-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .event-image-side {
+        text-align: center;
+    }
+
+    .event-image-large {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .event-image-placeholder {
+        width: 100%;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+    }
+
+    .event-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .event-section {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-light-blue);
+        font-size: 1.5rem;
+    }
+
+    .event-description {
+        line-height: 1.7;
+        color: var(--text-color);
+        font-size: 1.1rem;
+    }
+
+    .event-description p {
+        margin-bottom: 1rem;
+    }
+
+    .nko-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        text-align: center;
+    }
+
+    .nko-avatar-large {
+        width: 100px;
+        height: 100px;
+        border-radius: 15px;
+        object-fit: cover;
+        margin: 0 auto 1rem;
+        background: var(--primary-light-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: var(--primary-blue);
+    }
+
+    .nko-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .nko-description {
+        color: var(--dark-gray);
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+
+    .nko-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .nko-link:hover {
+        color: var(--primary-dark-blue);
+        transform: translateX(5px);
+    }
+
+    .similar-events {
+        margin-top: 3rem;
+    }
+
+    .similar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .similar-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .similar-card:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    .similar-card-title {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .similar-card-date {
+        color: var(--primary-blue);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .similar-card-nko {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .similar-card-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .similar-card-link:hover {
+        color: var(--primary-dark-blue);
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-left: 1rem;
+    }
+
+    .status-upcoming {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-ongoing {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .action-btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid transparent;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: var(--primary-blue);
+        color: var(--white);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--primary-blue);
+        border-color: var(--primary-blue);
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 968px) {
+        .event-hero-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        
+        .event-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .event-meta-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .event-detail-container {
+            padding: 0 1rem;
+        }
+        
+        .event-title {
+            font-size: 2rem;
+        }
+        
+        .event-hero {
+            padding: 2rem 1rem;
+        }
+        
+        .event-section {
+            padding: 1.5rem;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+        
+        .action-btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="event-detail-container">
+    <!-- Кнопка назад -->
+    <a href="{% url 'events:event_list' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Назад к календарю событий
+    </a>
+
+    <!-- Герой-секция события -->
+    <div class="event-hero">
+        <div class="event-hero-content">
+            <div class="event-main-info">
+                <h1 class="event-title">
+                    {{ event.title }}
+                    <span class="status-badge {% if event.start_date <= now and event.end_date >= now %}status-ongoing{% else %}status-upcoming{% endif %}">
+                        {% if event.start_date <= now and event.end_date >= now %}
+                            Сейчас проходит
+                        {% else %}
+                            Скоро
+                        {% endif %}
+                    </span>
+                </h1>
+                <p class="event-subtitle">{{ event.nko.name }}</p>
+                
+                <div class="event-meta-grid">
+                    <div class="meta-card">
+                        <div class="meta-label">Начало</div>
+                        <div class="meta-value">{{ event.start_date|date:"d E Y, H:i" }}</div>
+                    </div>
+                    <div class="meta-card">
+                        <div class="meta-label">Окончание</div>
+                        <div class="meta-value">{{ event.end_date|date:"d E Y, H:i" }}</div>
+                    </div>
+                    <div class="meta-card">
+                        <div class="meta-label">Место</div>
+                        <div class="meta-value">
+                            {% if event.address %}
+                                {{ event.address }}
+                            {% else %}
+                                {{ event.nko.city.name }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="meta-card">
+                        <div class="meta-label">Организатор</div>
+                        <div class="meta-value">{{ event.nko.name }}</div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    {% if event.nko.website %}
+                    <a href="{{ event.nko.website }}" target="_blank" class="action-btn btn-secondary">
+                        <i class="fas fa-globe"></i> Сайт организатора
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="event-image-side">
+                {% if event.image %}
+                    <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image-large">
+                {% else %}
+                    <div class="event-image-placeholder">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="event-content">
+        <!-- Левая колонка -->
+        <div>
+            <!-- Описание события -->
+            <div class="event-section">
+                <h2 class="section-title">О событии</h2>
+                <div class="event-description">
+                    {{ event.description|linebreaks }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div>
+            <!-- Организатор -->
+            <div class="nko-card">
+                {% if event.nko.logo %}
+                    <img src="{{ event.nko.logo.url }}" alt="{{ event.nko.name }}" class="nko-avatar-large">
+                {% else %}
+                    <div class="nko-avatar-large">
+                        <i class="fas fa-building"></i>
+                    </div>
+                {% endif %}
+                
+                <div class="nko-name">{{ event.nko.name }}</div>
+                <p class="nko-description">{{ event.nko.short_description }}</p>
+                
+                <a href="{% url 'nko:nko_detail' event.nko.pk %}" class="nko-link">
+                    Подробнее об организации <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Контакты -->
+            <div class="event-section">
+                <h2 class="section-title">Контакты</h2>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; background: var(--primary-light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--primary-blue);"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 500; color: var(--text-color);">Место проведения</div>
+                            <div style="color: var(--dark-gray);">
+                                {% if event.address %}
+                                    {{ event.address }}
+                                {% else %}
+                                    {{ event.nko.city.name }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if event.nko.website %}
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; background: var(--primary-light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-globe" style="color: var(--primary-blue);"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 500; color: var(--text-color);">Веб-сайт</div>
+                            <a href="{{ event.nko.website }}" target="_blank" style="color: var(--primary-blue); text-decoration: none;">
+                                {{ event.nko.website }}
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Похожие события -->
+    {% if similar_events %}
+    <div class="similar-events">
+        <div class="event-section">
+            <h2 class="section-title">Другие события от {{ event.nko.name }}</h2>
+            <div class="similar-grid">
+                {% for similar_event in similar_events %}
+                <div class="similar-card">
+                    <h3 class="similar-card-title">{{ similar_event.title }}</h3>
+                    <div class="similar-card-date">
+                        {{ similar_event.start_date|date:"d E Y, H:i" }}
+                    </div>
+                    <div class="similar-card-nko">{{ similar_event.nko.name }}</div>
+                    <p style="color: var(--dark-gray); margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.4;">
+                        {{ similar_event.description|truncatewords:20 }}
+                    </p>
+                    <a href="{% url 'events:event_detail' similar_event.pk %}" class="similar-card-link">
+                        Подробнее <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

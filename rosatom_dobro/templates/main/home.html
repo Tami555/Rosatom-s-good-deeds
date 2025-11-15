@@ -1,0 +1,319 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Добрые дела Росатома - Главная{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+        color: var(--white);
+        padding: 6rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("{% static 'images/pattern.svg' %}") repeat;
+        opacity: 0.1;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        animation: slideUp 1s ease;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    .features {
+        padding: 4rem 2rem;
+        background: var(--light-gray);
+    }
+
+    .features-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .feature-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-blue);
+        box-shadow: 0 8px 25px rgba(0, 102, 204, 0.15);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+
+    .cta-section {
+        background: var(--white);
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .cta-btn {
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        border: 2px solid var(--primary-blue);
+    }
+
+    .cta-btn.primary {
+        background: var(--primary-blue);
+        color: var(--white);
+    }
+
+    .cta-btn.secondary {
+        background: transparent;
+        color: var(--primary-blue);
+    }
+
+    .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
+    }
+
+    .stats {
+        background: var(--primary-light-blue);
+        padding: 3rem 2rem;
+    }
+
+    .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .stat-item {
+        padding: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+        
+        .hero p {
+            font-size: 1rem;
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .cta-btn {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Герой-секция -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Добрые дела Росатома — все инициативы вашего города в одном месте</h1>
+        <p>Единый портал для жителей, волонтёров и НКО, где собрана вся информация о социальных, экологических, культурных, образовательных и спортивных инициативах в городах присутствия Росатома.</p>
+        <a href="{% url 'map:map_view' %}" class="cta-btn primary">
+            <i class="fas fa-search"></i>
+                Что рядом с вами ?
+        </a>
+    </div>
+</section>
+
+<!-- Возможности -->
+<section class="features">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-hands-helping"></i>
+            </div>
+            <h3>Узнайте о НКО</h3>
+            <p>Откройте для себя все волонтёрские проекты и некоммерческие организации, работающие в вашем городе</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Следите за событиями</h3>
+            <p>Будьте в курсе актуальных мероприятий и событий, которые проходят рядом с вами</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Развивайтесь</h3>
+            <p>Находите полезные ресурсы и обучающие материалы для личного и профессионального роста</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Присоединяйтесь</h3>
+            <p>Получайте контакты координаторов для участия или поддержки интересующих инициатив</p>
+        </div>
+    </div>
+</section>
+
+<!-- Статистика -->
+<section class="stats">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-number" id="nkoCount">50+</div>
+            <div class="stat-label">НКО и организаций</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="cityCount">30+</div>
+            <div class="stat-label">Городов присутствия</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="eventCount">100+</div>
+            <div class="stat-label">Мероприятий в месяц</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="volunteerCount">1000+</div>
+            <div class="stat-label">Активных волонтёров</div>
+        </div>
+    </div>
+</section>
+
+<!-- Призыв к действию -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2 style="margin-bottom: 1rem; color: var(--text-color);">Станьте частью добрых дел в вашем городе!</h2>
+        <p style="margin-bottom: 2rem; color: var(--dark-gray);">Присоединяйтесь к сообществу волонтёров и организаций, меняющих жизнь к лучшему</p>
+        
+        <div class="cta-buttons">
+            <a href="{% url 'users:register_volunteer' %}" class="cta-btn primary">
+                <i class="fas fa-user-plus"></i>
+                Стать волонтёром
+            </a>
+            <a href="{% url 'users:register_nko' %}" class="cta-btn secondary">
+                <i class="fas fa-building"></i>
+                Зарегистрировать НКО
+            </a>
+            <a href="{% url 'nko:nko_list' %}" class="cta-btn secondary">
+                <i class="fas fa-search"></i>
+                Найти организации
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Анимация счетчиков статистики
+    function animateCounter(element, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+                element.textContent = target + '+';
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(start) + '+';
+            }
+        }, 16);
+    }
+
+    // Запускаем анимацию при прокрутке до секции
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(document.getElementById('nkoCount'), 50);
+                animateCounter(document.getElementById('cityCount'), 30);
+                animateCounter(document.getElementById('eventCount'), 100);
+                animateCounter(document.getElementById('volunteerCount'), 1000);
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    });
+</script>
+{% endblock %}

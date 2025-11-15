@@ -1,0 +1,599 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Управление событиями - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .events-manage-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-top: 3rem;
+    }
+
+    .page-title {
+        color: var(--text-color);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        border: 2px solid transparent;
+        transition: var(--transition);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--primary-blue);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .filters-section {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+    }
+
+    .filters-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr auto;
+        gap: 1.5rem;
+        align-items: end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-label {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-select, .filter-input {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+    }
+
+    .filter-select:focus, .filter-input:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .search-box {
+        position: relative;
+    }
+
+    .search-input {
+        padding-left: 3rem;
+        width: 100%;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--dark-gray);
+    }
+
+    .filter-btn {
+        background: var(--primary-blue);
+        color: var(--white);
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        white-space: nowrap;
+    }
+
+    .filter-btn:hover {
+        background: var(--primary-dark-blue);
+        transform: translateY(-2px);
+    }
+
+    .create-event-btn {
+        background: var(--primary-blue);
+        color: var(--white);
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+    }
+
+    .create-event-btn:hover {
+        background: var(--primary-dark-blue);
+        transform: translateY(-2px);
+        color: var(--white);
+    }
+
+    .events-table {
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+
+    .table-header {
+        background: var(--primary-blue);
+        color: var(--white);
+        padding: 1.5rem 2rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        gap: 1rem;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    .table-row {
+        padding: 1.5rem 2rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr auto;
+        gap: 1rem;
+        align-items: center;
+        border-bottom: 1px solid var(--medium-gray);
+        transition: var(--transition);
+    }
+
+    .table-row:last-child {
+        border-bottom: none;
+    }
+
+    .table-row:hover {
+        background: var(--primary-light-blue);
+    }
+
+    .event-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .event-image-small {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: var(--primary-light-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-blue);
+        font-size: 1.2rem;
+    }
+
+    .event-details h4 {
+        color: var(--text-color);
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+    }
+
+    .event-details p {
+        color: var(--dark-gray);
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .event-date {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .event-status {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .status-upcoming {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .status-active {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-past {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        padding: 0.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .btn-view {
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+    }
+
+    .btn-edit {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .btn-delete {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .no-events {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--dark-gray);
+    }
+
+    .no-events-icon {
+        font-size: 4rem;
+        color: var(--medium-gray);
+        margin-bottom: 1.5rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 3rem 0;
+    }
+
+    .page-link {
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        transition: var(--transition);
+        min-width: 45px;
+        text-align: center;
+    }
+
+    .page-link:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+    }
+
+    .page-link.active {
+        background: var(--primary-blue);
+        color: var(--white);
+        border-color: var(--primary-blue);
+    }
+
+    .page-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .page-link.disabled:hover {
+        border-color: var(--medium-gray);
+        color: var(--text-color);
+    }
+
+    .current-page-info {
+        text-align: center;
+        color: var(--dark-gray);
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 968px) {
+        .table-header,
+        .table-row {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            text-align: center;
+        }
+        
+        .event-info {
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .filters-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .events-manage-container {
+            padding: 0 1rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="events-manage-container">
+    <!-- Заголовок страницы -->
+    <div class="page-header">
+        <h1 class="page-title">Управление событиями</h1>
+        <p class="page-subtitle">
+            Создавайте, редактируйте и управляйте событиями вашей организации
+        </p>
+    </div>
+
+    <!-- Статистика -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ total_events }}</div>
+            <div class="stat-label">Всего событий</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ active_events }}</div>
+            <div class="stat-label">Активных событий</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ past_events }}</div>
+            <div class="stat-label">Завершенных событий</div>
+        </div>
+    </div>
+
+    <!-- Фильтры и поиск -->
+    <div class="filters-section">
+        <form method="get" id="filtersForm">
+            <div class="filters-grid">
+                <!-- Поиск -->
+                <div class="filter-group">
+                    <label class="filter-label">Поиск событий</label>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" 
+                               name="search" 
+                               value="{{ search_query }}"
+                               class="filter-input search-input" 
+                               placeholder="Введите название события...">
+                    </div>
+                </div>
+
+                <!-- Фильтр по статусу -->
+                <div class="filter-group">
+                    <label class="filter-label">Статус событий</label>
+                    <select name="status" class="filter-select" onchange="this.form.submit()">
+                        <option value="all" {% if status_filter == 'all' %}selected{% endif %}>Все события</option>
+                        <option value="upcoming" {% if status_filter == 'upcoming' %}selected{% endif %}>Предстоящие</option>
+                        <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Активные</option>
+                        <option value="past" {% if status_filter == 'past' %}selected{% endif %}>Завершенные</option>
+                    </select>
+                </div>
+
+                <!-- Кнопка создания события -->
+                <div class="filter-group">
+                    <a href="{% url 'events:event_create' %}" class="create-event-btn">
+                        <i class="fas fa-plus"></i> Создать событие
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Таблица событий -->
+    <div class="events-table">
+        {% if events.object_list %}
+            <!-- Заголовок таблицы -->
+            <div class="table-header">
+                <div>Событие</div>
+                <div>Дата начала</div>
+                <div>Дата окончания</div>
+                <div>Статус</div>
+                <div>Действия</div>
+            </div>
+
+            <!-- Строки таблицы -->
+            {% for event in events %}
+                <div class="table-row">
+                    <!-- Информация о событии -->
+                    <div class="event-info">
+                        {% if event.image %}
+                            <img src="{{ event.image.url }}" alt="{{ event.title }}" class="event-image-small">
+                        {% else %}
+                            <div class="event-image-small">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                        {% endif %}
+                        <div class="event-details">
+                            <h4>{{ event.title }}</h4>
+                            <p>{{ event.description|truncatewords:10 }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Дата начала -->
+                    <div class="event-date">
+                        {{ event.start_date|date:"d.m.Y H:i" }}
+                    </div>
+
+                    <!-- Дата окончания -->
+                    <div class="event-date">
+                        {{ event.end_date|date:"d.m.Y H:i" }}
+                    </div>
+
+                    <!-- Статус -->
+                    <div>
+                        {% if event.end_date < now %}
+                            <span class="event-status status-past">Завершено</span>
+                        {% elif event.start_date <= now and event.end_date >= now %}
+                            <span class="event-status status-active">Активно</span>
+                        {% else %}
+                            <span class="event-status status-upcoming">Предстоящее</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Действия -->
+                    <div class="action-buttons">
+                        <a href="{% url 'events:event_detail' event.pk %}" 
+                           class="action-btn btn-view" 
+                           title="Просмотреть">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="{% url 'events:event_edit' event.pk %}" 
+                           class="action-btn btn-edit" 
+                           title="Редактировать">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{% url 'events:event_delete' event.pk %}" 
+                           class="action-btn btn-delete" 
+                           title="Удалить">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Сообщение, если событий нет -->
+            <div class="no-events">
+                <div class="no-events-icon">
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <h3>События не найдены</h3>
+                <p>
+                    {% if status_filter != 'all' %}
+                        По выбранному фильтру события не найдены.
+                    {% else %}
+                        У вас пока нет созданных событий.
+                    {% endif %}
+                </p>
+                <a href="{% url 'events:event_create' %}" class="create-event-btn" style="margin-top: 1rem;">
+                    <i class="fas fa-plus"></i> Создать первое событие
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Пагинация -->
+    {% if events.has_other_pages %}
+        <div class="pagination-container">
+            <div class="current-page-info">
+                Страница {{ events.number }} из {{ events.paginator.num_pages }}
+            </div>
+            
+            <div class="pagination">
+                {% if events.has_previous %}
+                    <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" 
+                       class="page-link" title="Первая страница">
+                        <i class="fas fa-angle-double-left"></i>
+                    </a>
+                    <a href="?page={{ events.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" 
+                       class="page-link" title="Предыдущая страница">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                {% else %}
+                    <span class="page-link disabled"><i class="fas fa-angle-double-left"></i></span>
+                    <span class="page-link disabled"><i class="fas fa-angle-left"></i></span>
+                {% endif %}
+
+                {% for num in events.paginator.page_range %}
+                    {% if events.number == num %}
+                        <span class="page-link active">{{ num }}</span>
+                    {% elif num > events.number|add:'-3' and num < events.number|add:'3' %}
+                        <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" 
+                           class="page-link">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if events.has_next %}
+                    <a href="?page={{ events.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" 
+                       class="page-link" title="Следующая страница">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                    <a href="?page={{ events.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}" 
+                       class="page-link" title="Последняя страница">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                {% else %}
+                    <span class="page-link disabled"><i class="fas fa-angle-right"></i></span>
+                    <span class="page-link disabled"><i class="fas fa-angle-double-right"></i></span>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

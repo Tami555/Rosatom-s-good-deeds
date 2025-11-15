@@ -1,0 +1,489 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактирование события - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<!-- Используем те же стили, что и для создания события -->
+<style>
+    .event-create-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-top: 3rem;
+    }
+
+    .page-title {
+        color: var(--text-color);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .event-create-card {
+        background: var(--white);
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+    }
+
+    .form-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .form-section h3 {
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-light-blue);
+        font-size: 1.3rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .form-label.required::after {
+        content: " *";
+        color: #e74c3c;
+    }
+
+    .form-input, .form-select, .form-textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: var(--white);
+        font-family: inherit;
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .current-image {
+        margin-bottom: 1rem;
+    }
+
+    .current-image img {
+        max-width: 200px;
+        border-radius: 8px;
+        border: 2px solid var(--medium-gray);
+    }
+
+    .image-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .image-action-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--medium-gray);
+        border-radius: 6px;
+        background: var(--white);
+        color: var(--dark-gray);
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: var(--transition);
+    }
+
+    .image-action-btn:hover {
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+    }
+
+    .file-input-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .file-input-wrapper input[type=file] {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .file-input-label {
+        display: block;
+        padding: 2rem;
+        border: 2px dashed var(--medium-gray);
+        border-radius: 8px;
+        text-align: center;
+        color: var(--dark-gray);
+        transition: var(--transition);
+        cursor: pointer;
+    }
+
+    .file-input-label:hover {
+        border-color: var(--primary-blue);
+        color: var(--primary-blue);
+    }
+
+    .file-input-label i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--medium-gray);
+    }
+
+    .form-btn {
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: var(--transition);
+        border: 2px solid transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-primary {
+        background: var(--primary-blue);
+        color: var(--white);
+        border-color: var(--primary-blue);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--primary-blue);
+        border-color: var(--primary-blue);
+    }
+
+    .btn-danger {
+        background: transparent;
+        color: #e74c3c;
+        border-color: #e74c3c;
+    }
+
+    .form-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-dark-blue);
+    }
+
+    .btn-secondary:hover {
+        background: var(--primary-light-blue);
+    }
+
+    .btn-danger:hover {
+        background: #f8d7da;
+    }
+
+    @media (max-width: 768px) {
+        .event-create-container {
+            padding: 0 1rem;
+        }
+        
+        .event-create-card {
+            padding: 2rem 1.5rem;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+        }
+        
+        .form-btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="event-create-container">
+    <!-- Заголовок страницы -->
+    <div class="page-header">
+        <h1 class="page-title">Редактирование события</h1>
+        <p class="page-subtitle">
+            Обновите информацию о вашем мероприятии
+        </p>
+    </div>
+
+    <!-- Форма редактирования события -->
+    <div class="event-create-card">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" style="
+                    padding: 1rem;
+                    margin-bottom: 2rem;
+                    border-radius: 8px;
+                    background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+                    color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};
+                    border: 1px solid {% if message.tags == 'success' %}#c3e6cb{% else %}#f5c6cb{% endif %};
+                ">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Основная информация -->
+            <div class="form-section">
+                <h3>Основная информация</h3>
+                
+                <!-- Название события -->
+                <div class="form-group">
+                    <label class="form-label required" for="{{ form.title.id_for_label }}">
+                        {{ form.title.label }}
+                    </label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <ul class="error-list">
+                            {% for error in form.title.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Описание события -->
+                <div class="form-group">
+                    <label class="form-label required" for="{{ form.description.id_for_label }}">
+                        {{ form.description.label }}
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <ul class="error-list">
+                            {% for error in form.description.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Даты и время -->
+            <div class="form-section">
+                <h3>Дата и время проведения</h3>
+                
+                <div class="datetime-inputs">
+                    <!-- Дата начала -->
+                    <div class="form-group">
+                        <label class="form-label required" for="{{ form.start_date.id_for_label }}">
+                            {{ form.start_date.label }}
+                        </label>
+                        {{ form.start_date }}
+                        {% if form.start_date.errors %}
+                            <ul class="error-list">
+                                {% for error in form.start_date.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <!-- Дата окончания -->
+                    <div class="form-group">
+                        <label class="form-label required" for="{{ form.end_date.id_for_label }}">
+                            {{ form.end_date.label }}
+                        </label>
+                        {{ form.end_date }}
+                        {% if form.end_date.errors %}
+                            <ul class="error-list">
+                                {% for error in form.end_date.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Место проведения и изображение -->
+            <div class="form-section">
+                <h3>Дополнительная информация</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <!-- Адрес -->
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.address.id_for_label }}">
+                            {{ form.address.label }}
+                        </label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <ul class="error-list">
+                                {% for error in form.address.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <!-- Изображение -->
+                    <div class="form-group">
+                        <label class="form-label" for="{{ form.image.id_for_label }}">
+                            {{ form.image.label }}
+                        </label>
+                        
+                        <!-- Текущее изображение -->
+                        {% if event.image %}
+                        <div class="current-image">
+                            <img src="{{ event.image.url }}" alt="Текущее изображение">
+                            <div class="image-actions">
+                                <span style="color: var(--dark-gray); font-size: 0.9rem;">
+                                    Текущее изображение
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="file-input-wrapper">
+                            {{ form.image }}
+                            <label for="{{ form.image.id_for_label }}" class="file-input-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                {% if event.image %}
+                                    Заменить изображение
+                                {% else %}
+                                    Загрузить изображение
+                                {% endif %}
+                                <span class="form-help">JPG, PNG (рекомендуется 16:9)</span>
+                            </label>
+                        </div>
+                        {% if form.image.errors %}
+                            <ul class="error-list">
+                                {% for error in form.image.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Неформальные ошибки -->
+            {% if form.non_field_errors %}
+                <div style="background: #f8d7da; color: #721c24; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+                    <ul style="margin: 0; padding-left: 1rem;">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Действия -->
+            <div class="form-actions">
+                <div>
+                    <a href="{% url 'events:event_manage' %}" class="form-btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Назад к управлению
+                    </a>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="{% url 'events:event_delete' event.pk %}" class="form-btn btn-danger">
+                        <i class="fas fa-trash"></i> Удалить
+                    </a>
+                    <button type="submit" class="form-btn btn-primary">
+                        <i class="fas fa-save"></i> Сохранить изменения
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Показываем имя выбранного файла
+        const fileInput = document.querySelector('input[type="file"]');
+        const fileLabel = document.querySelector('.file-input-label');
+        
+        if (fileInput && fileLabel) {
+            fileInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const fileName = this.files[0].name;
+                    fileLabel.innerHTML = `
+                        <i class="fas fa-file-image"></i>
+                        Выбран файл: ${fileName}
+                        <span class="form-help">JPG, PNG (рекомендуется 16:9)</span>
+                    `;
+                }
+            });
+        }
+        
+        // Форматируем даты для полей datetime-local
+        function formatDateForInput(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toISOString().slice(0, 16);
+        }
+        
+        // Устанавливаем значения дат в правильном формате
+        const startDateInput = document.querySelector('input[type="datetime-local"][name="start_date"]');
+        const endDateInput = document.querySelector('input[type="datetime-local"][name="end_date"]');
+        
+        if (startDateInput && startDateInput.value) {
+            startDateInput.value = formatDateForInput(startDateInput.value);
+        }
+        if (endDateInput && endDateInput.value) {
+            endDateInput.value = formatDateForInput(endDateInput.value);
+        }
+        
+        // Валидация дат
+        if (startDateInput && endDateInput) {
+            startDateInput.addEventListener('change', function() {
+                if (this.value && endDateInput.value && this.value >= endDateInput.value) {
+                    // Если начальная дата позже конечной, обновляем конечную
+                    const startDate = new Date(this.value);
+                    startDate.setHours(startDate.getHours() + 1);
+                    endDateInput.value = startDate.toISOString().slice(0, 16);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

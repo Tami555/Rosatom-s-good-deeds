@@ -1,0 +1,104 @@
+{% extends 'users/auth_base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - Добрые дела Росатома{% endblock %}
+
+{% block auth_content %}
+<div class="auth-header">
+    <div class="auth-icon">
+        {% if user_type == 'volunteer' %}
+            <i class="fas fa-user-plus"></i>
+        {% else %}
+            <i class="fas fa-building"></i>
+        {% endif %}
+    </div>
+    <h1 class="auth-title">{{ title }}</h1>
+    <p class="auth-subtitle">
+        {% if user_type == 'volunteer' %}
+            Присоединяйтесь к сообществу волонтёров
+        {% else %}
+            Зарегистрируйте вашу организацию на платформе
+        {% endif %}
+    </p>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" style="
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+            color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};
+            border: 1px solid {% if message.tags == 'success' %}#c3e6cb{% else %}#f5c6cb{% endif %};
+        ">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post" {% if user_type == 'nko' %}enctype="multipart/form-data"{% endif %}>
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div class="form-group">
+            <label class="form-label" for="{{ field.id_for_label }}">
+                {{ field.label }}
+                {% if field.field.required %}<span style="color: #e74c3c;">*</span>{% endif %}
+            </label>
+            {{ field }}
+            {% if field.help_text %}
+                <small style="color: #666; font-size: 0.8rem; display: block; margin-top: 0.25rem;">
+                    {{ field.help_text }}
+                </small>
+            {% endif %}
+            {% if field.errors %}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="auth-btn">
+        {% if user_type == 'volunteer' %}
+            Стать волонтёром
+        {% else %}
+            Зарегистрировать НКО
+        {% endif %}
+    </button>
+</form>
+
+<div class="auth-links">
+    {% if user_type == 'volunteer' %}
+        <p>Уже есть аккаунт?
+            <a href="{% url 'users:volunteer_login' %}" class="auth-link">
+                Войти как волонтёр
+            </a>
+        </p>
+        <p>Вы НКО?
+            <a href="{% url 'users:register_nko' %}" class="auth-link">
+                Зарегистрировать НКО
+            </a>
+        </p>
+    {% else %}
+        <p>Уже есть аккаунт?
+            <a href="{% url 'users:nko_login' %}" class="auth-link">
+                Войти как НКО
+            </a>
+        </p>
+        <p>Вы волонтёр?
+            <a href="{% url 'users:register_volunteer' %}" class="auth-link">
+                Стать волонтёром
+            </a>
+        </p>
+    {% endif %}
+    <p>
+        <a href="{% url 'main:home' %}" class="auth-link">
+            ← Вернуться на главную
+        </a>
+    </p>
+</div>
+{% endblock %}

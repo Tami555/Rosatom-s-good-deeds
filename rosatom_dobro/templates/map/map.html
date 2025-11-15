@@ -1,0 +1,606 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Карта НКО - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .map-container {
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-top: 3rem;
+    }
+
+    .page-title {
+        color: var(--text-color);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        color: var(--dark-gray);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .map-controls {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .city-selector {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .selector-label {
+        font-weight: 500;
+        color: var(--text-color);
+        white-space: nowrap;
+    }
+
+    .city-dropdown {
+        padding: 0.75rem 2rem 0.75rem 1rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 8px;
+        font-size: 1rem;
+        background: var(--white);
+        cursor: pointer;
+        transition: var(--transition);
+        min-width: 250px;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230066cc'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1rem;
+    }
+
+    .city-dropdown:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .map-stats {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem 1.5rem;
+        background: var(--primary-light-blue);
+        border-radius: 10px;
+        min-width: 120px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: var(--dark-gray);
+        font-weight: 500;
+    }
+
+    .map-content {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .map-wrapper {
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .map-image {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .map-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0, 102, 204, 0.1), transparent 30%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .map-message {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 2rem;
+        border-radius: 15px;
+        max-width: 500px;
+    }
+
+    .map-message h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--white);
+    }
+
+    .map-message p {
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+        line-height: 1.5;
+    }
+
+    .coming-soon-badge {
+        display: inline-block;
+        background: var(--primary-blue);
+        color: var(--white);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .nko-list {
+        background: var(--white);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+    .nko-list-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--primary-light-blue);
+    }
+
+    .nko-list-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .nko-list-subtitle {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+
+    .nko-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nko-item {
+        padding: 1.5rem;
+        border: 2px solid var(--medium-gray);
+        border-radius: 10px;
+        transition: var(--transition);
+        cursor: pointer;
+    }
+
+    .nko-item:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+    }
+
+    .nko-item-header {
+        display: flex;
+        justify-content: between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .nko-logo-small {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        object-fit: cover;
+        background: var(--primary-light-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--primary-blue);
+        flex-shrink: 0;
+    }
+
+    .nko-info {
+        flex: 1;
+    }
+
+    .nko-name {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.25rem;
+        font-size: 1.1rem;
+    }
+
+    .nko-city {
+        color: var(--primary-blue);
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .nko-category {
+        display: inline-block;
+        background: var(--primary-light-blue);
+        color: var(--primary-blue);
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+    }
+
+    .nko-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .nko-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        transition: var(--transition);
+    }
+
+    .nko-link:hover {
+        color: var(--primary-dark-blue);
+    }
+
+    .no-nkos {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--dark-gray);
+    }
+
+    .no-nkos i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--medium-gray);
+    }
+
+    .feature-highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .feature-card {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .feature-card:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .feature-title {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .feature-description {
+        color: var(--dark-gray);
+        line-height: 1.5;
+    }
+
+    @media (max-width: 968px) {
+        .map-content {
+            grid-template-columns: 1fr;
+        }
+
+        .map-controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .city-selector {
+            justify-content: center;
+        }
+
+        .map-stats {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .map-container {
+            padding: 0 1rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .map-image {
+            height: 400px;
+        }
+
+        .feature-highlights {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="map-container">
+    <!-- Заголовок страницы -->
+    <div class="page-header">
+        <h1 class="page-title">Карта добрых дел</h1>
+        <p class="page-subtitle">
+            Найдите организации и инициативы рядом с вами.
+            Карта показывает все активные НКО в городах присутствия Росатома.
+        </p>
+    </div>
+
+    <!-- Управление картой -->
+    <div class="map-controls">
+        <div class="city-selector">
+            <span class="selector-label">Выберите город:</span>
+            <select class="city-dropdown" onchange="window.location.href = '?city=' + this.value">
+                <option value="">Все города</option>
+                {% for city in cities %}
+                    <option value="{{ city.id }}"
+                            {% if selected_city and selected_city.id == city.id %}selected{% endif %}>
+                        {{ city.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="map-stats">
+            <div class="stat-item">
+                <div class="stat-number">{{ nko_count }}</div>
+                <div class="stat-label">Организаций</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ cities.count }}</div>
+                <div class="stat-label">Городов</div>
+            </div>
+            {% if selected_city %}
+            <div class="stat-item">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Выбранный город</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Основной контент: карта и список -->
+    <div class="map-content">
+        <!-- Карта -->
+        <div class="map-wrapper">
+            <img src="{% static 'images/default_map.png' %}" alt="Карта городов Росатома" class="map-image">
+
+            <!-- Оверлей с сообщением -->
+            <div class="map-overlay">
+                <div class="map-message">
+                    <div class="coming-soon-badge">Скоро</div>
+                    <h3>Интерактивная карта в разработке</h3>
+                    <p>
+                        В ближайшее время здесь появится интерактивная карта с метками всех организаций.
+                        Вы сможете находить НКО в вашем городе и просматривать информацию о них прямо на карте.
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-map-marker-alt" style="color: #ff4444;"></i>
+                            <span>Метки организаций</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-search" style="color: #00C851;"></i>
+                            <span>Поиск по карте</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-route" style="color: #33b5e5;"></i>
+                            <span>Построение маршрутов</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Список НКО -->
+        <div class="nko-list">
+            <div class="nko-list-header">
+                <h2 class="nko-list-title">
+                    {% if selected_city %}
+                        Организации в {{ selected_city.name }}
+                    {% else %}
+                        Все организации
+                    {% endif %}
+                </h2>
+                <p class="nko-list-subtitle">
+                    {% if selected_city %}
+                        Найдено {{ nko_count }} организаций в выбранном городе
+                    {% else %}
+                        Всего {{ nko_count }} организаций в {{ cities.count }} городах
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="nko-items">
+                {% if nkos %}
+                    {% for nko in nkos %}
+                        <div class="nko-item">
+                            <div class="nko-item-header">
+                                {% if nko.logo %}
+                                    <img src="{{ nko.logo.url }}" alt="{{ nko.name }}" class="nko-logo-small">
+                                {% else %}
+                                    <div class="nko-logo-small">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                {% endif %}
+                                <div class="nko-info">
+                                    <div class="nko-name">{{ nko.name }}</div>
+                                    <div class="nko-city">{{ nko.city.name }}</div>
+                                    <div class="nko-category">{{ nko.categories.name }}</div>
+                                </div>
+                            </div>
+                            <p style="color: var(--dark-gray); font-size: 0.9rem; line-height: 1.4; margin-bottom: 1rem;">
+                                {{ nko.short_description }}
+                            </p>
+                            <div class="nko-actions">
+                                <a href="{% url 'nko:nko_detail' nko.pk %}" class="nko-link">
+                                    <i class="fas fa-info-circle"></i> Подробнее
+                                </a>
+                                {% if nko.website %}
+                                <a href="{{ nko.website }}" target="_blank" class="nko-link">
+                                    <i class="fas fa-external-link-alt"></i> Сайт
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-nkos">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Организации не найдены</h3>
+                        <p>
+                            {% if selected_city %}
+                                В городе "{{ selected_city.name }}" пока нет активных организаций.
+                            {% else %}
+                                На данный момент нет активных организаций.
+                            {% endif %}
+                        </p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Особенности будущей карты -->
+    <div class="feature-highlights">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h3 class="feature-title">Точные метки</h3>
+            <p class="feature-description">
+                Все организации будут отмечены на карте с точными адресами и контактной информацией
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-filter"></i>
+            </div>
+            <h3 class="feature-title">Умная фильтрация</h3>
+            <p class="feature-description">
+                Фильтруйте организации по категориям, типу деятельности и другим параметрам
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-route"></i>
+            </div>
+            <h3 class="feature-title">Построение маршрутов</h3>
+            <p class="feature-description">
+                Строите оптимальные маршруты до выбранных организаций с учетом транспорта
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3 class="feature-title">Мобильная версия</h3>
+            <p class="feature-description">
+                Удобный просмотр карты на мобильных устройствах с адаптивным интерфейсом
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Анимация появления элементов
+        const cards = document.querySelectorAll('.feature-card, .nko-item');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.style.animation = 'slideUp 0.5s ease forwards';
+        });
+
+        // Обработка выбора города
+        const citySelect = document.querySelector('.city-dropdown');
+        if (citySelect) {
+            citySelect.addEventListener('change', function() {
+                // Можно добавить дополнительную логику здесь
+                console.log('Выбран город:', this.value);
+            });
+        }
+
+        // Плавная прокрутка для карточек особенностей
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-5px)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-3px)';
+                }, 150);
+            });
+        });
+    });
+</script>
+{% endblock %}

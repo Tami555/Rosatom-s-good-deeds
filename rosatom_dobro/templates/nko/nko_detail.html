@@ -1,0 +1,450 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ nko.name }} - Добрые дела Росатома{% endblock %}
+
+{% block extra_css %}
+<style>
+    .nko-detail-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    .nko-header {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark-blue) 100%);
+        color: var(--white);
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nko-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("{% static 'images/pattern.svg' %}") repeat;
+        opacity: 0.1;
+    }
+
+    .nko-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .nko-logo-large {
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        object-fit: cover;
+        border: 4px solid var(--white);
+        background: var(--white);
+    }
+
+    .nko-logo-placeholder {
+        width: 150px;
+        height: 150px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 4px solid var(--white);
+    }
+
+    .nko-logo-placeholder i {
+        font-size: 3rem;
+        color: var(--white);
+    }
+
+    .nko-header-info {
+        flex: 1;
+    }
+
+    .nko-title {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .nko-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 1rem;
+    }
+
+    .nko-meta {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+
+    .nko-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .nko-section {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-light-blue);
+        font-size: 1.5rem;
+    }
+
+    .nko-description {
+        line-height: 1.7;
+        color: var(--text-color);
+        font-size: 1.1rem;
+    }
+
+    .contact-info {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border: 2px solid var(--primary-light-blue);
+        border-radius: 8px;
+        transition: var(--transition);
+    }
+
+    .contact-item:hover {
+        border-color: var(--primary-blue);
+        background: var(--primary-light-blue);
+    }
+
+    .contact-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-blue);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+
+    .contact-details {
+        flex: 1;
+    }
+
+    .contact-label {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 0.25rem;
+    }
+
+    .contact-value {
+        color: var(--dark-gray);
+    }
+
+    .contact-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .contact-link:hover {
+        color: var(--primary-dark-blue);
+        text-decoration: underline;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .social-link {
+        width: 50px;
+        height: 50px;
+        background: var(--primary-blue);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: var(--transition);
+        font-size: 1.2rem;
+    }
+
+    .social-link:hover {
+        background: var(--primary-dark-blue);
+        transform: translateY(-3px);
+    }
+
+    .similar-nkos {
+        margin-top: 3rem;
+    }
+
+    .similar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .similar-card {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border: 2px solid transparent;
+    }
+
+    .similar-card:hover {
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    .similar-card-title {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .similar-card-city {
+        color: var(--primary-blue);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .similar-card-link {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .similar-card-link:hover {
+        color: var(--primary-dark-blue);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        transition: var(--transition);
+    }
+
+    .back-link:hover {
+        color: var(--primary-dark-blue);
+        transform: translateX(-5px);
+    }
+
+    @media (max-width: 768px) {
+        .nko-detail-container {
+            padding: 0 1rem;
+        }
+        
+        .nko-header-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .nko-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .nko-meta {
+            justify-content: center;
+        }
+        
+        .nko-title {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="nko-detail-container">
+    <!-- Кнопка назад -->
+    <a href="{% url 'nko:nko_list' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Назад к списку организаций
+    </a>
+
+    <!-- Заголовок НКО -->
+    <div class="nko-header">
+        <div class="nko-header-content">
+            {% if nko.logo %}
+                <img src="{{ nko.logo.url }}" alt="{{ nko.name }}" class="nko-logo-large">
+            {% else %}
+                <div class="nko-logo-placeholder">
+                    <i class="fas fa-building"></i>
+                </div>
+            {% endif %}
+            
+            <div class="nko-header-info">
+                <h1 class="nko-title">{{ nko.name }}</h1>
+                <p class="nko-subtitle">{{ nko.short_description }}</p>
+                
+                <div class="nko-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ nko.city.name }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>{{ nko.categories.name }}</span>
+                    </div>
+                    {% if nko.address %}
+                    <div class="meta-item">
+                        <i class="fas fa-home"></i>
+                        <span>{{ nko.address }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="nko-content">
+        <!-- Левая колонка -->
+        <div>
+            <!-- Описание -->
+            <div class="nko-section">
+                <h2 class="section-title">О организации</h2>
+                <div class="nko-description">
+                    {{ nko.description|linebreaks }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div>
+            <!-- Контакты -->
+            <div class="nko-section">
+                <h2 class="section-title">Контакты</h2>
+                <div class="contact-info">
+                    {% if nko.address %}
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-label">Адрес</div>
+                            <div class="contact-value">{{ nko.address }}</div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if nko.website %}
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-label">Веб-сайт</div>
+                            <a href="{{ nko.website }}" target="_blank" class="contact-value contact-link">
+                                {{ nko.website }}
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Социальные сети -->
+                {% if nko.vk_link or nko.telegram_link %}
+                <div style="margin-top: 1.5rem;">
+                    <div class="contact-label" style="margin-bottom: 1rem;">Социальные сети</div>
+                    <div class="social-links">
+                        {% if nko.vk_link %}
+                        <a href="{{ nko.vk_link }}" target="_blank" class="social-link" title="ВКонтакте">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        {% endif %}
+                        {% if nko.telegram_link %}
+                        <a href="{{ nko.telegram_link }}" target="_blank" class="social-link" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Город -->
+            <div class="nko-section">
+                <h2 class="section-title">Город</h2>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 50px; height: 50px; background: var(--primary-light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-city" style="color: var(--primary-blue);"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 600; color: var(--text-color);">{{ nko.city.name }}</div>
+                        <div style="color: var(--dark-gray); font-size: 0.9rem;">Город присутствия</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Похожие НКО -->
+    {% if similar_nkos %}
+    <div class="similar-nkos">
+        <div class="nko-section">
+            <h2 class="section-title">Похожие организации в {{ nko.city.name }}</h2>
+            <div class="similar-grid">
+                {% for similar_nko in similar_nkos %}
+                <div class="similar-card">
+                    <h3 class="similar-card-title">{{ similar_nko.name }}</h3>
+                    <div class="similar-card-city">{{ similar_nko.city.name }}</div>
+                    <p style="color: var(--dark-gray); margin-bottom: 1rem; font-size: 0.9rem;">
+                        {{ similar_nko.short_description|truncatewords:15 }}
+                    </p>
+                    <a href="{% url 'nko:nko_detail' similar_nko.pk %}" class="similar-card-link">
+                        Подробнее <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

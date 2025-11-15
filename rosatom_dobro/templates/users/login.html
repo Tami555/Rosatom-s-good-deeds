@@ -1,0 +1,94 @@
+{% extends 'users/auth_base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - Добрые дела Росатома{% endblock %}
+
+{% block auth_content %}
+<div class="auth-header">
+    <div class="auth-icon">
+        {% if user_type == 'volunteer' %}
+            <i class="fas fa-user"></i>
+        {% else %}
+            <i class="fas fa-building"></i>
+        {% endif %}
+    </div>
+    <h1 class="auth-title">{{ title }}</h1>
+    <p class="auth-subtitle">
+        {% if user_type == 'volunteer' %}
+            Войдите в свой аккаунт волонтёра
+        {% else %}
+            Войдите в аккаунт вашей организации
+        {% endif %}
+    </p>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" style="
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+            color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};
+            border: 1px solid {% if message.tags == 'success' %}#c3e6cb{% else %}#f5c6cb{% endif %};
+        ">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div class="form-group">
+            <label class="form-label" for="{{ field.id_for_label }}">
+                {{ field.label }}
+            </label>
+            {{ field }}
+            {% if field.errors %}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit" class="auth-btn">
+        Войти
+    </button>
+</form>
+
+<div class="auth-links">
+    {% if user_type == 'volunteer' %}
+        <p>Нет аккаунта?
+            <a href="{% url 'users:register_volunteer' %}" class="auth-link">
+                Зарегистрироваться как волонтёр
+            </a>
+        </p>
+        <p>Вы НКО?
+            <a href="{% url 'users:nko_login' %}" class="auth-link">
+                Войти как НКО
+            </a>
+        </p>
+    {% else %}
+        <p>Нет аккаунта?
+            <a href="{% url 'users:register_nko' %}" class="auth-link">
+                Зарегистрировать НКО
+            </a>
+        </p>
+        <p>Вы волонтёр?
+            <a href="{% url 'users:volunteer_login' %}" class="auth-link">
+                Войти как волонтёр
+            </a>
+        </p>
+    {% endif %}
+    <p>
+        <a href="{% url 'main:home' %}" class="auth-link">
+            ← Вернуться на главную
+        </a>
+    </p>
+</div>
+{% endblock %}

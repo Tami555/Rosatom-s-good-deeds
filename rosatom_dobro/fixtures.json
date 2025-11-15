@@ -1,0 +1,1772 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-11-15T08:07:13.462Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "центр\" МБУ \"Молодежный",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0415\\u0441\\u0442\\u044c \\u0434\\u043e\\u0441\\u0442\\u0443\\u043f \\u043a \\u043f\\u0443\\u0431\\u043b\\u0438\\u043a\\u0430\\u0446\\u0438\\u044f\\u043c\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-11-15T10:20:37.863Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Шок контент",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-11-15T10:23:08.276Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Шок контент",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0413\\u043e\\u0440\\u043e\\u0434\\u0430\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-11-15T14:32:23.835Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Зачем мы? Как мы меняем мир? Проблема, видение, социальные эффекты, импакт",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-11-15T14:34:32.123Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Зачем мы? Как мы меняем мир? Проблема, видение, социальные эффекты, импакт",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Hashtags\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-11-15T14:35:37.552Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Зачем мы? Как мы меняем мир? Проблема, видение, социальные эффекты, импакт",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-11-15T14:36:34.049Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Зачем мы? Как мы меняем мир? Проблема, видение, социальные эффекты, импакт",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u0441\\u044b\\u043b\\u043a\\u0430 \\u043d\\u0430 \\u0432\\u0438\\u0434\\u0435\\u043e\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-11-15T14:57:44.724Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Зачем мы? Как мы меняем мир? Проблема, видение, социальные эффекты, импакт",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u0421\\u0441\\u044b\\u043b\\u043a\\u0430 \\u043d\\u0430 \\u0432\\u0438\\u0434\\u0435\\u043e\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2025-11-15T21:08:32.407Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "2",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Как менять мир системно?",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2025-11-15T21:09:30.274Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "3",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Что именно мы предлагаем?",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2025-11-15T21:10:58.732Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "4",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Где найти деньги на мою нко: базовый фандрайзинг (гранты, государство, бизнес, частные лица)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2025-11-15T21:11:56.564Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "5",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Как написать/улучшить грантовую заявку? Где искать гранты?",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2025-11-15T21:12:22.679Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "6",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Социальное предпринимательство в нко: Кто купит мой продукт? портрет клиента (покупателя, партнера, благополучателя)",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2025-11-15T21:13:49.289Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "7",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Основные задачи PR: Что важно для успешного развития организации?",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2025-11-15T21:15:19.146Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "8",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Организация мероприятий и их PR-поддержка",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2025-11-15T21:16:08.433Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "9",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Взаимосвязь PR и GR в построении узнаваемого бренда",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2025-11-15T21:17:18.315Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "10",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Команда НКО: От набора людей к сильному коллективу",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2025-11-15T21:18:03.261Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "11",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Управление командой: Инструменты руководителя НКО, стили управления в НКО, делегирование и контроль, выстраивание процессов коммуникации",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2025-11-15T21:18:31.590Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "12",
+    "object_repr": "Курс «НКО: от идеи до реализации»; Развитие и удержание команды в долгосрочной перспективе",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2025-11-15T21:20:10.667Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "13",
+    "object_repr": "Зелёный офис; Концепция «Зелёный офис». С чего начать?",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2025-11-15T21:21:22.756Z",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "14",
+    "object_repr": "Зелёный офис; Зелёный офис: от слов к делу",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2025-11-15T21:23:50.808Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Шок контент",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2025-11-15T21:25:58.917Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "2",
+    "object_repr": "Сборная «Росатома» завоевала 32 награды и специальных приз на Международном чемпионате высокотехнологичных профессий «Хайтек: навыки будущего»",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2025-11-15T21:26:59.961Z",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "3",
+    "object_repr": "«Росатом» принял участие в пленарной сессии международного чемпионата высокотехнологичных профессий «Хайтек: навыки будущего-2025»",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2025-11-15T21:37:46.740Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "ОО ТОС АГО  \"12а микрорайон\"",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"\\u041f\\u043e\\u0434\\u0442\\u0432\\u0435\\u0440\\u0436\\u0434\\u0435\\u043d\\u043e\", \"\\u0415\\u0441\\u0442\\u044c \\u0434\\u043e\\u0441\\u0442\\u0443\\u043f \\u043a \\u043f\\u0443\\u0431\\u043b\\u0438\\u043a\\u0430\\u0446\\u0438\\u044f\\u043c\"]}}]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 4,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 4,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 4,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 4,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 5,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 5,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 5,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 5,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add Категория",
+    "content_type": 6,
+    "codename": "add_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change Категория",
+    "content_type": 6,
+    "codename": "change_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete Категория",
+    "content_type": 6,
+    "codename": "delete_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view Категория",
+    "content_type": 6,
+    "codename": "view_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add Город",
+    "content_type": 7,
+    "codename": "add_city"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change Город",
+    "content_type": 7,
+    "codename": "change_city"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete Город",
+    "content_type": 7,
+    "codename": "delete_city"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view Город",
+    "content_type": 7,
+    "codename": "view_city"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add НКО",
+    "content_type": 8,
+    "codename": "add_nko"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change НКО",
+    "content_type": 8,
+    "codename": "change_nko"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete НКО",
+    "content_type": 8,
+    "codename": "delete_nko"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view НКО",
+    "content_type": 8,
+    "codename": "view_nko"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add База знаний",
+    "content_type": 9,
+    "codename": "add_knowledgebase"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change База знаний",
+    "content_type": 9,
+    "codename": "change_knowledgebase"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete База знаний",
+    "content_type": 9,
+    "codename": "delete_knowledgebase"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view База знаний",
+    "content_type": 9,
+    "codename": "view_knowledgebase"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add Событие",
+    "content_type": 10,
+    "codename": "add_event"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change Событие",
+    "content_type": 10,
+    "codename": "change_event"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete Событие",
+    "content_type": 10,
+    "codename": "delete_event"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view Событие",
+    "content_type": 10,
+    "codename": "view_event"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add Новость",
+    "content_type": 11,
+    "codename": "add_news"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change Новость",
+    "content_type": 11,
+    "codename": "change_news"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete Новость",
+    "content_type": 11,
+    "codename": "delete_news"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view Новость",
+    "content_type": 11,
+    "codename": "view_news"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 12,
+    "codename": "add_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 12,
+    "codename": "change_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 12,
+    "codename": "delete_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 12,
+    "codename": "view_customuser"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add hashtag",
+    "content_type": 13,
+    "codename": "add_hashtag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change hashtag",
+    "content_type": 13,
+    "codename": "change_hashtag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete hashtag",
+    "content_type": 13,
+    "codename": "delete_hashtag"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view hashtag",
+    "content_type": 13,
+    "codename": "view_hashtag"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "nko",
+    "model": "category"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "nko",
+    "model": "city"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "nko",
+    "model": "nko"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "knowledge_base",
+    "model": "knowledgebase"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "events",
+    "model": "event"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "news",
+    "model": "news"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "users",
+    "model": "customuser"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "knowledge_base",
+    "model": "hashtag"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "1m8qu91e6mor7w3w6mol1i2685ox8dq7",
+  "fields": {
+    "session_data": ".eJxVjDsOwyAQBe9CHSF-xpAyvc-AdmEJTiKQjF1FuXtsyUXSvpl5bxZgW0vYOi1hTuzKBnb53RDik-oB0gPqvfHY6rrMyA-Fn7TzqSV63U7376BAL3strNIRIY8ScoasEI0nbwcw6GPOWiIYQLKordxNiiO5JJ0moQQll9jnCxsYOUQ:1vKNyZ:2elbUZPDHeegkOu7AA1TL_5RFCLKhrV4NlrL5jnSCjA",
+    "expire_date": "2025-11-29T21:38:31.655Z"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 1,
+  "fields": {
+    "name": "Ангарск, Иркутская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 2,
+  "fields": {
+    "name": "Глазов, Удмуртская Республика"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 3,
+  "fields": {
+    "name": "Энергодар, Запорожская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 4,
+  "fields": {
+    "name": "Электросталь, Московская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 5,
+  "fields": {
+    "name": "Усолье-Сибирское, Иркутская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 6,
+  "fields": {
+    "name": "Удомля, Тверская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 7,
+  "fields": {
+    "name": "Трехгорный, Челябинская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 8,
+  "fields": {
+    "name": "Сосновый Бор, Ленинградская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 9,
+  "fields": {
+    "name": "Советск, Калининградская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 10,
+  "fields": {
+    "name": "Снежинск, Челябинская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 11,
+  "fields": {
+    "name": "Северск, Томская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 12,
+  "fields": {
+    "name": "Саров, Нижегородская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 13,
+  "fields": {
+    "name": "Полярные Зори, Мурманская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 14,
+  "fields": {
+    "name": "Певек, Чукотский АО"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 15,
+  "fields": {
+    "name": "Озерск, Челябинская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 16,
+  "fields": {
+    "name": "Обнинск, Калужская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 17,
+  "fields": {
+    "name": "Новоуральск, Свердловская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 18,
+  "fields": {
+    "name": "Нововоронеж, Воронежская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 19,
+  "fields": {
+    "name": "Неман, Калининградская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 20,
+  "fields": {
+    "name": "Лесной, Свердловская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 21,
+  "fields": {
+    "name": "Курчатов, Курская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 22,
+  "fields": {
+    "name": "Краснокаменск, Забайкальский край"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 23,
+  "fields": {
+    "name": "Зеленогорск, Красноярский край"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 24,
+  "fields": {
+    "name": "Заречный, Свердловская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 25,
+  "fields": {
+    "name": "ЗАТО Заречный, Пензенская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 26,
+  "fields": {
+    "name": "Железногорск, Красноярский край"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 27,
+  "fields": {
+    "name": "Димитровград, Ульяновская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 28,
+  "fields": {
+    "name": "Десногорск, Смоленская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 29,
+  "fields": {
+    "name": "Волгодонск, Ростовская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 30,
+  "fields": {
+    "name": "Билибино, Чукотский АО"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 31,
+  "fields": {
+    "name": "Балаково, Саратовская область"
+  }
+},
+{
+  "model": "nko.city",
+  "pk": 32,
+  "fields": {
+    "name": "Байкальск, Иркутская область"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 1,
+  "fields": {
+    "name": "Местное сообщество и развитие территорий"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 2,
+  "fields": {
+    "name": "Другое"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 3,
+  "fields": {
+    "name": "Защита животных"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 4,
+  "fields": {
+    "name": "Культура и образование"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 5,
+  "fields": {
+    "name": "Здоровье и спорт"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 6,
+  "fields": {
+    "name": "Экология и устойчивое развитие"
+  }
+},
+{
+  "model": "nko.category",
+  "pk": 7,
+  "fields": {
+    "name": "Социальная защита (помощь людям в трудной ситуации)"
+  }
+},
+{
+  "model": "nko.nko",
+  "pk": 1,
+  "fields": {
+    "name": "центр\" МБУ \"Молодежный",
+    "description": "Основные деятельность:\r\n-Консультирование и регистрация на площадке «Добро.РФ»\r\n-Проведение \"Школы волонтеров\" \r\n-Формирование и сопровождение волонтерских корпусов (например, на общегородских мероприятиях, федеральных проектах (Формирование комфортной городской среды)\r\n-Информирование граждан и организаторов о развитии добровольчества, благотворительности и гражданских инициатив (индивидуально)\r\n\r\nЦА:\r\nМолодежь в возрасте от 14 до 35 лет",
+    "short_description": "Муниципальное бюджетное учреждение «Молодёжный центр» города Глазов занимается организацией мероприятий в сфере молодёжной политики, созданием условий для самореализации подростков и молодёжи, развитием их творческого, профессионального и интеллектуального потенциалов",
+    "logo": "nko_logos/LOGOMCNEW.png",
+    "address": "ул. Пряженникова, 51А.",
+    "website": null,
+    "vk_link": "https://vk.com/mcglazov",
+    "telegram_link": null,
+    "city": 2,
+    "category": 1,
+    "user": 3,
+    "is_approved": true,
+    "has_access": true,
+    "created_at": "2025-11-14T23:28:26.347Z"
+  }
+},
+{
+  "model": "nko.nko",
+  "pk": 2,
+  "fields": {
+    "name": "ОО ТОС АГО  \"12а микрорайон\"",
+    "description": "Основная деятельность\r\nПовышение качества жизни жителей 12а микрорайона г.Ангарска Иркутской области ( Благоустройство и содержании территории, организация культурных, спортивных и социально значимых мероприятий, взаимодействие с органами власти для учёта мнения жителей, , экологии и социальной помощи.\r\n\r\nЦА\r\nЖители микрорайона 12А (социально незащищенные группы: пенсионеры, инвалиды, многодетные семьи, малоимущие и д.р. дети и молодежь, собственники жилья.)\r\n\r\nПлан мероприятий на год\r\n1) Физическая зарядка для пенсионеров каждый четверг\r\n2) Каждую пятницу тренировки по скандинавской ходьбе для всех возрастов. \r\n3) До 30.10.2025 установка детской эко-площадки и открытие площадки.\r\n4) Раз в месяц встречи с жителями по обсуждению проблем на территории и пути решения.",
+    "short_description": "Повышение качества жизни жителей 12а микрорайона г.Ангарска Иркутской области",
+    "logo": "nko_logos/At4T_yzRYyWHtiRU1G5bdFFFt5p8oFgeJG39zpitkfVJpyfG-qfYnpKPuhTFjqG1lB1n-NWuZSSasM_SFBDU0b.jpg",
+    "address": "мкр. 12А, д. 2, кв. 244",
+    "website": "https://tsn12a.ru/",
+    "vk_link": "https://vk.com/id746471055",
+    "telegram_link": null,
+    "city": 1,
+    "category": 1,
+    "user": 5,
+    "is_approved": true,
+    "has_access": true,
+    "created_at": "2025-11-15T21:34:08.357Z"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 1,
+  "fields": {
+    "title": "эко"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 2,
+  "fields": {
+    "title": "дети"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 3,
+  "fields": {
+    "title": "пожилые"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 4,
+  "fields": {
+    "title": "животные"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 5,
+  "fields": {
+    "title": "инвалидность"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 6,
+  "fields": {
+    "title": "маркетинг"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 7,
+  "fields": {
+    "title": "ЗОЖ"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 8,
+  "fields": {
+    "title": "медиа"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 9,
+  "fields": {
+    "title": "игрофикация"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 10,
+  "fields": {
+    "title": "обучение"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 11,
+  "fields": {
+    "title": "командообразование"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 12,
+  "fields": {
+    "title": "лидерство"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 13,
+  "fields": {
+    "title": "сообщества"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 14,
+  "fields": {
+    "title": "коммуникации"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 15,
+  "fields": {
+    "title": "городская_среда"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 16,
+  "fields": {
+    "title": "фандрайзинг"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 17,
+  "fields": {
+    "title": "КСО"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 18,
+  "fields": {
+    "title": "ЦУР"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 19,
+  "fields": {
+    "title": "бизнес_тренинг"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 20,
+  "fields": {
+    "title": "благотворительность"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 21,
+  "fields": {
+    "title": "соц_проекты"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 22,
+  "fields": {
+    "title": "соц_пред"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 23,
+  "fields": {
+    "title": "бизнес_и_НКО"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 24,
+  "fields": {
+    "title": "инклюзия"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 25,
+  "fields": {
+    "title": "стратегия"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 26,
+  "fields": {
+    "title": "волонтерство"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 27,
+  "fields": {
+    "title": "креатив"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 28,
+  "fields": {
+    "title": "росатом"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 29,
+  "fields": {
+    "title": "бизнес"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 30,
+  "fields": {
+    "title": "гранты"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 31,
+  "fields": {
+    "title": "PR"
+  }
+},
+{
+  "model": "knowledge_base.hashtag",
+  "pk": 32,
+  "fields": {
+    "title": "менеджмент"
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 1,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Зачем мы? Как мы меняем мир? Проблема, видение, социальные эффекты, импакт",
+    "speaker": "Андрей Андрусов",
+    "video_url": "https://rutube.ru/video/private/813e814fabecba124457841793492765/?p=li06oNnLfsRdK6rBqj0QOQ",
+    "created_at": "2025-11-15T14:32:23.831Z",
+    "hashtags": [
+      21,
+      22
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 2,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Как менять мир системно?",
+    "speaker": "Андрей Андрусов",
+    "video_url": "https://rutube.ru/video/private/f495991115a29c09c9cfda03b02509db/?p=Crhqe05KaW9HBBqlMM7LYQ",
+    "created_at": "2025-11-15T21:08:32.401Z",
+    "hashtags": [
+      21,
+      22
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 3,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Что именно мы предлагаем?",
+    "speaker": "Андрей Андрусов",
+    "video_url": "https://rutube.ru/video/private/647e23994fdb231bd2cc499cb5bea688/?p=PZU5pnvGjha_VlAjlfWUMw",
+    "created_at": "2025-11-15T21:09:30.271Z",
+    "hashtags": [
+      21,
+      22
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 4,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Где найти деньги на мою нко: базовый фандрайзинг (гранты, государство, бизнес, частные лица)",
+    "speaker": "Анастасия Москвина",
+    "video_url": "https://rutube.ru/video/private/eab96d267b455c8e33288228f4a7a845/?p=NSloLWbf1ATI9bd-Y2IOaw",
+    "created_at": "2025-11-15T21:10:58.728Z",
+    "hashtags": [
+      16,
+      20
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 5,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Как написать/улучшить грантовую заявку? Где искать гранты?",
+    "speaker": "Анастасия Москвина",
+    "video_url": "https://rutube.ru/video/private/6dc76376dcbd784f06e0d2951ca4b75a/?p=86OIrn-JNS4ZDBO-CJ2-mw",
+    "created_at": "2025-11-15T21:11:56.560Z",
+    "hashtags": [
+      30
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 6,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Социальное предпринимательство в нко: Кто купит мой продукт? портрет клиента (покупателя, партнера, благополучателя)",
+    "speaker": "Анастасия Москвина",
+    "video_url": "https://rutube.ru/video/private/1e0094eea4ea3c56578861683bdf5a44/?p=tQ4O8m4c90do9BQNL4-crA",
+    "created_at": "2025-11-15T21:12:22.673Z",
+    "hashtags": [
+      21,
+      22
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 7,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Основные задачи PR: Что важно для успешного развития организации?",
+    "speaker": "Анастасия Андронова",
+    "video_url": "https://rutube.ru/video/private/5ab07931de97542a992e02af3ac1b769/?p=j7_LjN6AefoCVczu3-ywZQ",
+    "created_at": "2025-11-15T21:13:49.286Z",
+    "hashtags": [
+      14,
+      21
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 8,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Организация мероприятий и их PR-поддержка",
+    "speaker": "Анастасия Андронова",
+    "video_url": "https://rutube.ru/video/private/7a34f7dbf26b88238ad6332e79e75f52/?p=IWgmgLvUv6dmvL5Mh4ZBmA",
+    "created_at": "2025-11-15T21:15:19.142Z",
+    "hashtags": [
+      14,
+      21
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 9,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Взаимосвязь PR и GR в построении узнаваемого бренда",
+    "speaker": "Анастасия Андронова",
+    "video_url": "https://rutube.ru/video/private/a00542232213fde679ea046df7baa1e1/?p=9oH-86YX9uDcKq4y1fmkuQ",
+    "created_at": "2025-11-15T21:16:08.428Z",
+    "hashtags": [
+      14,
+      21
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 10,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Команда НКО: От набора людей к сильному коллективу",
+    "speaker": "Алексей Мокеев",
+    "video_url": "https://rutube.ru/video/private/2be0340e8fe622c326250f8bbbdf8dd9/?p=LR6AxyBYP3Mo6vpzpDS9KQ",
+    "created_at": "2025-11-15T21:17:18.312Z",
+    "hashtags": [
+      11,
+      12
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 11,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Управление командой: Инструменты руководителя НКО, стили управления в НКО, делегирование и контроль, выстраивание процессов коммуникации",
+    "speaker": "Алексей Мокеев",
+    "video_url": "https://rutube.ru/video/private/af878f72a14766de40a1237a461b9f46/?p=5TUDn_w3_-fk8vP4kSmyQg",
+    "created_at": "2025-11-15T21:18:03.255Z",
+    "hashtags": [
+      11,
+      12
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 12,
+  "fields": {
+    "course_title": "Курс «НКО: от идеи до реализации»",
+    "topic": "Развитие и удержание команды в долгосрочной перспективе",
+    "speaker": "Алексей Мокеев",
+    "video_url": "https://rutube.ru/video/private/1a5b1ee456e1dc4778371abf6ae5c957/?p=N6DXp_ckkqIWSVjxlfpg9g",
+    "created_at": "2025-11-15T21:18:31.586Z",
+    "hashtags": [
+      11
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 13,
+  "fields": {
+    "course_title": "Зелёный офис",
+    "topic": "Концепция «Зелёный офис». С чего начать?",
+    "speaker": "Ольга Шкабардня; Евгения Кузнецова",
+    "video_url": "https://vkvideo.ru/video-172285001_456239301",
+    "created_at": "2025-11-15T21:20:10.661Z",
+    "hashtags": [
+      1,
+      15
+    ]
+  }
+},
+{
+  "model": "knowledge_base.knowledgebase",
+  "pk": 14,
+  "fields": {
+    "course_title": "Зелёный офис",
+    "topic": "Зелёный офис: от слов к делу",
+    "speaker": "Ксения Лопаткина",
+    "video_url": "https://vkvideo.ru/video-172285001_456239300",
+    "created_at": "2025-11-15T21:21:22.751Z",
+    "hashtags": [
+      1,
+      15
+    ]
+  }
+},
+{
+  "model": "events.event",
+  "pk": 2,
+  "fields": {
+    "title": "Пушистые лапки",
+    "description": "Благотворительная акция для бездомных животных. Оч круто",
+    "start_date": "2025-11-18T12:30:00Z",
+    "end_date": "2025-11-21T12:30:00Z",
+    "image": "event_images/i_ubwuioo.webp",
+    "address": "ул. Пряженникова, 51А.",
+    "nko": 1,
+    "created_at": "2025-11-15T09:52:48.057Z"
+  }
+},
+{
+  "model": "news.news",
+  "pk": 2,
+  "fields": {
+    "title": "Сборная «Росатома» завоевала 32 награды и специальных приз на Международном чемпионате высокотехнологичных профессий «Хайтек: навыки будущего»",
+    "content": "14 ноября в Екатеринбурге состоялась церемония награждения победителей и призеров международного чемпионата высокотехнологичных профессий «Хайтек: навыки будущего» (проводится с 2014 года в Екатеринбурге). Соревнования проходили в общероссийском и международном зачетах, они собрали более 1000 конкурсантов и экспертов из 15 стран.\r\nСоревнования прошли в 41 компетенции. Участники сборной «Росатома», насчитывавшей более 200 человек, были заявлены в 25 из них. Кроме того, в ряде компетенций организаторы учредили специальные призы.",
+    "image": "news_images/qelomqccyfqtq2cvwrw8fll01y29jrjv.jpg",
+    "created_at": "2025-11-15T21:25:58.914Z",
+    "cities": []
+  }
+},
+{
+  "model": "news.news",
+  "pk": 3,
+  "fields": {
+    "title": "«Росатом» принял участие в пленарной сессии международного чемпионата высокотехнологичных профессий «Хайтек: навыки будущего-2025»",
+    "content": "Заместитель генерального директора госкорпорации «Росатом» Татьяна Терентьева приняла участие в пленарной сессии «Человек в центре технологического лидерства» в рамках деловой программы международного чемпионата высокотехнологичных профессий «Хайтек: навыки будущего», которая прошла 13 ноября в Екатеринбурге. В мероприятии также приняли участие полномочный представитель Президента РФ в Уральском федеральном округе Артем Жога, директор департамента стратегического развития и корпоративной политики Минпромторга России Алексей Матушанский, заместитель губернатора - министр инвестиций и развития Свердловской области Дмитрий Ионин и другие. Ключевой темой пленарной сессии стало обсуждение факторов, которые позволяют обеспечить технологический суверенитет страны и добиться лидерства в высокотехнологичных направлениях производства и промышленности.\r\nВ ходе своего выступления Татьяна Терентьева рассказала об образовательной экосистеме «Росатома», которая на каждом этапе профессионального сотрудника корпорации пути дает точку опоры и возможность для карьерного роста. В частности, были представлены проекты по работе с молодежью на базе школ, колледжей и вузов, площадки новых образовательных пространств (Национальный центр физики и математики, «Обнинск. Тех», «Уральский Атом» и другие), а также проекты профессиональной подготовки специалистов по программам АНО «Корпоративная академия Росатома» и Технической академии Росатома. Особый акцент был сделан на развитии чемпионатного движения Atomskills (отраслевые чемпионаты профессионального мастерства).",
+    "image": "news_images/ou6pq1g0qu9hv3vgpg31xriahi3at9lw.jpg",
+    "created_at": "2025-11-15T21:26:59.957Z",
+    "cities": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$hQDFGb6KurxDG7lAmmA0TZ$K+TtaU88IoeJbtzyINvmjpXV45QZqu2TN5xUzgRo4GM=",
+    "last_login": "2025-11-15T21:36:07.092Z",
+    "is_superuser": true,
+    "username": "Tami",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-11-14T21:51:53.516Z",
+    "user_type": "volunteer",
+    "email": "tdrozdikova@gmail.com",
+    "age": null,
+    "city": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$CqkaPOm1QZBVIiFcEWNx2a$eIOD1tk6OMk9AXuCukq0nXDzSYMLBzmT4DoqhPihUbw=",
+    "last_login": "2025-11-15T15:00:04.858Z",
+    "is_superuser": false,
+    "username": "mby_center",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-14T23:28:25.779Z",
+    "user_type": "nko",
+    "email": "mcglazov@mail.ru",
+    "age": null,
+    "city": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$WUefFw5HEtlLRUg7Gt7mLB$es49xOinYLYIO6J4rUfJexS3G7oM44uuy2x2RgkaSS4=",
+    "last_login": "2025-11-14T23:53:04.165Z",
+    "is_superuser": false,
+    "username": "Tatiana",
+    "first_name": "Татьяна",
+    "last_name": "Дроздикова",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-14T23:53:03.516Z",
+    "user_type": "volunteer",
+    "email": "tdrozd22ikova@gmail.com",
+    "age": 18,
+    "city": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$orzOkp75xwu95QnnJkBcY7$KLpVOnXZ2Y8O2zMo9JgwAtgFiNfSYULuzL+PnE7qP2s=",
+    "last_login": "2025-11-15T21:38:31.650Z",
+    "is_superuser": false,
+    "username": "oo_tos_12",
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-15T21:34:07.536Z",
+    "user_type": "nko",
+    "email": "tos12a@mail.ru",
+    "age": null,
+    "city": null,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
