@@ -29,3 +29,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('map/', include('map.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+admin.site.site_header = 'Админка сайта «Добрые дела Росатома»'
