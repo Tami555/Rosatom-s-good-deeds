@@ -24,7 +24,7 @@ def volunteer_login(request):
 
             if user is not None and user.user_type == 'volunteer':
                 login(request, user)
-                messages.success(request, f'Добро пожаловать, {user.username}!')
+                # messages.success(request, f'Добро пожаловать, {user.username}!')
                 next_url = request.GET.get('next', 'users:profile')
                 return redirect(next_url)
             else:
@@ -55,7 +55,7 @@ def nko_login(request):
 
             if user is not None and user.user_type == 'nko':
                 login(request, user)
-                messages.success(request, f'Добро пожаловать, {user.nko.name}!')
+                # messages.success(request, f'Добро пожаловать, {user.nko.name}!')
                 next_url = request.GET.get('next', 'users:profile')
                 return redirect(next_url)
             else:
@@ -82,7 +82,7 @@ def volunteer_register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, 'Регистрация прошла успешно! Добро пожаловать!')
+            # messages.success(request, 'Регистрация прошла успешно! Добро пожаловать!')
             return redirect('users:profile')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме')
@@ -106,7 +106,7 @@ def nko_register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, 'Регистрация НКО прошла успешно! Ожидайте подтверждения администратора.')
+            # messages.success(request, 'Регистрация НКО прошла успешно! Ожидайте подтверждения администратора.')
             return redirect('users:profile')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме')
@@ -168,5 +168,5 @@ def profile_edit(request):
 @login_required
 def custom_logout(request):
     logout(request)
-    messages.success(request, 'Вы успешно вышли из системы')
+    # messages.success(request, 'Вы успешно вышли из системы')
     return redirect('main:home')
